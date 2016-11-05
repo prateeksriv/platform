@@ -40,12 +40,37 @@ func (o *ChannelList) Etag() string {
 	return Etag(id, t, delta, len(*o))
 }
 
-func ChannelListFromJson(data io.Reader) *ChannelList {
+// This function was buggy and I had to create the following workaround to make it work.
+// I know this is not the correct solution, I just wanted to share this idea or solution.
+// I do not know enough about golang coding to design a fix. My intent was to highlight the bug.
+
+func ChannelListFromJson(data io.Reader) *mattermost.ChannelList {
+
+	var ret mattermost.ChannelList
 	decoder := json.NewDecoder(data)
-	var o ChannelList
-	err := decoder.Decode(&o)
+	var dat map[string]interface{}
+	err := decoder.Decode(&dat)
+	cli := dat["channels"].([]interface{})
+	for _, ch := range cli {
+		var t mattermost.Channel
+		for k, v := range ch.(map[string]interface{}) {
+			if k == "name" {
+				t.Name = v.(string)
+			}
+			if k == "display_name" {
+				t.DisplayName = v.(string)
+			}
+			if k == "purpose" {
+				t.Purpose = v.(string)
+			}
+			if k == "id" {
+				t.Id = v.(string)
+			}
+		}
+		ret = append(ret, &t)
+	}
 	if err == nil {
-		return &o
+		return &ret
 	} else {
 		return nil
 	}
