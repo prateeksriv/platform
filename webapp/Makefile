@@ -1,38 +1,38 @@
-.PHONY: build test run clean stop check-style run-unit
+.PHONY: build test run clean stop check-style run-unit emojis
 
 BUILD_SERVER_DIR = ..
 
-check-style: .npminstall
+check-style: .yarninstall
 	@echo Checking for style guide compliance
 
-	npm run check
+	yarn run check
 
-test: .npminstall
+test: .yarninstall
 	cd $(BUILD_SERVER_DIR) && $(MAKE) internal-test-web-client
 
-.npminstall: package.json
-	@echo Getting dependencies using npm
+.yarninstall: package.json
+	@echo Getting dependencies using yarn
 
-	npm install
+	yarn install
 
 	touch $@
 
-build: .npminstall
+build: .yarninstall
 	@echo Building mattermost Webapp
 
 	rm -rf dist
 
-	npm run build
+	yarn run build
 
-run: .npminstall
+run: .yarninstall
 	@echo Running mattermost Webapp for development
 
-	npm run run &
+	yarn run run &
 
-run-fullmap: .npminstall
+run-fullmap: .yarninstall
 	@echo FULL SOURCE MAP Running mattermost Webapp for development FULL SOURCE MAP
 
-	npm run run-fullmap &
+	yarn run run-fullmap &
 
 stop:
 	@echo Stopping changes watching
@@ -49,6 +49,11 @@ endif
 clean:
 	@echo Cleaning Webapp
 
+	yarn cache clean
+
 	rm -rf dist
 	rm -rf node_modules
-	rm -f .npminstall
+	rm -f .yarninstall
+
+emojis:
+	./make-emojis

@@ -1,8 +1,10 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
+import * as FileUtils from 'utils/file_utils';
 import * as Utils from 'utils/utils.jsx';
 
 export default class FileInfoPreview extends React.Component {
@@ -33,17 +35,31 @@ export default class FileInfoPreview extends React.Component {
 
         const infoString = infoParts.join(', ');
 
-        return (
-            <div className='file-details__container'>
+        let preview = null;
+        if (FileUtils.canDownloadFiles()) {
+            preview = (
                 <a
-                    className={'file-details__preview'}
-                    to={fileUrl}
+                    className='file-details__preview'
+                    href={fileUrl}
                     target='_blank'
                     rel='noopener noreferrer'
                 >
                     <span className='file-details__preview-helper'/>
                     <img src={Utils.getFileIconPath(fileInfo)}/>
                 </a>
+            );
+        } else {
+            preview = (
+                <span className='file-details__preview'>
+                    <span className='file-details__preview-helper'/>
+                    <img src={Utils.getFileIconPath(fileInfo)}/>
+                </span>
+            );
+        }
+
+        return (
+            <div className='file-details__container'>
+                {preview}
                 <div className='file-details'>
                     <div className='file-details__name'>{fileInfo.name}</div>
                     <div className='file-details__info'>{infoString}</div>
@@ -54,6 +70,6 @@ export default class FileInfoPreview extends React.Component {
 }
 
 FileInfoPreview.propTypes = {
-    fileInfo: React.PropTypes.object.isRequired,
-    fileUrl: React.PropTypes.string.isRequired
+    fileInfo: PropTypes.object.isRequired,
+    fileUrl: PropTypes.string.isRequired
 };

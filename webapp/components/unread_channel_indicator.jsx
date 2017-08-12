@@ -1,25 +1,32 @@
-// Copyright (c) 2015 Mattermost, Inc. All Rights Reserved.
+import PropTypes from 'prop-types';
+
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 // Indicator for the left sidebar which indicate if there's unread posts in a channel that is not shown
 // because it is either above or below the screen
 import React from 'react';
+import Constants from 'utils/constants.jsx';
 
-export default class UnreadChannelIndicator extends React.Component {
-    render() {
-        let displayValue = 'none';
-        if (this.props.show) {
-            displayValue = 'block';
-        }
-        return (
-            <div
-                className={'nav-pills__unread-indicator ' + this.props.extraClass}
-                style={{display: displayValue}}
-            >
-                {this.props.text}
-            </div>
-        );
+export default function UnreadChannelIndicator(props) {
+    const unreadIcon = Constants.UNREAD_ICON_SVG;
+    let displayValue = 'none';
+    if (props.show) {
+        displayValue = 'block';
     }
+
+    return (
+        <div
+            className={'nav-pills__unread-indicator ' + props.extraClass}
+            style={{display: displayValue}}
+        >
+            {props.text}
+            <span
+                className='icon icon__unread'
+                dangerouslySetInnerHTML={{__html: unreadIcon}}
+            />
+        </div>
+    );
 }
 
 UnreadChannelIndicator.defaultProps = {
@@ -28,7 +35,7 @@ UnreadChannelIndicator.defaultProps = {
     text: ''
 };
 UnreadChannelIndicator.propTypes = {
-    show: React.PropTypes.bool,
-    extraClass: React.PropTypes.string,
-    text: React.PropTypes.object
+    show: PropTypes.bool,
+    extraClass: PropTypes.string,
+    text: PropTypes.object
 };

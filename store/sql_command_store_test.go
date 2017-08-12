@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 package store
@@ -102,6 +102,36 @@ func TestCommandStoreDelete(t *testing.T) {
 	}
 
 	if r2 := <-store.Command().Delete(o1.Id, model.GetMillis()); r2.Err != nil {
+		t.Fatal(r2.Err)
+	}
+
+	if r3 := (<-store.Command().Get(o1.Id)); r3.Err == nil {
+		t.Log(r3.Data)
+		t.Fatal("Missing id should have failed")
+	}
+}
+
+func TestCommandStoreDeleteByTeam(t *testing.T) {
+	Setup()
+
+	o1 := &model.Command{}
+	o1.CreatorId = model.NewId()
+	o1.Method = model.COMMAND_METHOD_POST
+	o1.TeamId = model.NewId()
+	o1.URL = "http://nowhere.com/"
+	o1.Trigger = "trigger"
+
+	o1 = (<-store.Command().Save(o1)).Data.(*model.Command)
+
+	if r1 := <-store.Command().Get(o1.Id); r1.Err != nil {
+		t.Fatal(r1.Err)
+	} else {
+		if r1.Data.(*model.Command).CreateAt != o1.CreateAt {
+			t.Fatal("invalid returned command")
+		}
+	}
+
+	if r2 := <-store.Command().PermanentDeleteByTeam(o1.TeamId); r2.Err != nil {
 		t.Fatal(r2.Err)
 	}
 

@@ -17,12 +17,12 @@
 package minio
 
 import (
-	"fmt"
 	"hash"
 	"io"
-	"io/ioutil"
 	"math"
 	"os"
+
+	"github.com/minio/minio-go/pkg/s3utils"
 )
 
 // Verify if reader is *os.File
@@ -43,24 +43,6 @@ func isReadAt(reader io.Reader) (ok bool) {
 	return
 }
 
-// shouldUploadPart - verify if part should be uploaded.
-func shouldUploadPart(objPart objectPart, objectParts map[int]objectPart) bool {
-	// If part not found should upload the part.
-	uploadedPart, found := objectParts[objPart.PartNumber]
-	if !found {
-		return true
-	}
-	// if size mismatches should upload the part.
-	if objPart.Size != uploadedPart.Size {
-		return true
-	}
-	// if md5sum mismatches should upload the part.
-	if objPart.ETag != uploadedPart.ETag {
-		return true
-	}
-	return false
-}
-
 // optimalPartInfo - calculate the optimal part info for a given
 // object size.
 //
@@ -68,7 +50,7 @@ func shouldUploadPart(objPart objectPart, objectParts map[int]objectPart) bool {
 // object storage it will have the following parameters as constants.
 //
 //  maxPartsCount - 10000
-//  minPartSize - 5MiB
+//  minPartSize - 64MiB
 //  maxMultipartPutObjectSize - 5TiB
 //
 func optimalPartInfo(objectSize int64) (totalPartsCount int, partSize int64, lastPartSize int64, err error) {
@@ -92,55 +74,6 @@ func optimalPartInfo(objectSize int64) (totalPartsCount int, partSize int64, las
 	// Last part size.
 	lastPartSize = objectSize - int64(totalPartsCount-1)*partSize
 	return totalPartsCount, partSize, lastPartSize, nil
-}
-
-// hashCopyBuffer is identical to hashCopyN except that it doesn't take
-// any size argument but takes a buffer argument and reader should be
-// of io.ReaderAt interface.
-//
-// Stages reads from offsets into the buffer, if buffer is nil it is
-// initialized to optimalBufferSize.
-func hashCopyBuffer(hashAlgorithms map[string]hash.Hash, hashSums map[string][]byte, writer io.Writer, reader io.ReaderAt, buf []byte) (size int64, err error) {
-	hashWriter := writer
-	for _, v := range hashAlgorithms {
-		hashWriter = io.MultiWriter(hashWriter, v)
-	}
-
-	// Buffer is nil, initialize.
-	if buf == nil {
-		buf = make([]byte, optimalReadBufferSize)
-	}
-
-	// Offset to start reading from.
-	var readAtOffset int64
-
-	// Following block reads data at an offset from the input
-	// reader and copies data to into local temporary file.
-	for {
-		readAtSize, rerr := reader.ReadAt(buf, readAtOffset)
-		if rerr != nil {
-			if rerr != io.EOF {
-				return 0, rerr
-			}
-		}
-		writeSize, werr := hashWriter.Write(buf[:readAtSize])
-		if werr != nil {
-			return 0, werr
-		}
-		if readAtSize != writeSize {
-			return 0, fmt.Errorf("Read size was not completely written to writer. wanted %d, got %d - %s", readAtSize, writeSize, reportIssue)
-		}
-		readAtOffset += int64(writeSize)
-		size += int64(writeSize)
-		if rerr == io.EOF {
-			break
-		}
-	}
-
-	for k, v := range hashAlgorithms {
-		hashSums[k] = v.Sum(nil)
-	}
-	return size, err
 }
 
 // hashCopyN - Calculates chosen hashes up to partSize amount of bytes.
@@ -167,59 +100,19 @@ func hashCopyN(hashAlgorithms map[string]hash.Hash, hashSums map[string][]byte, 
 
 // getUploadID - fetch upload id if already present for an object name
 // or initiate a new request to fetch a new upload id.
-func (c Client) getUploadID(bucketName, objectName, contentType string) (uploadID string, isNew bool, err error) {
+func (c Client) newUploadID(bucketName, objectName string, metaData map[string][]string) (uploadID string, err error) {
 	// Input validation.
-	if err := isValidBucketName(bucketName); err != nil {
-		return "", false, err
+	if err := s3utils.CheckValidBucketName(bucketName); err != nil {
+		return "", err
 	}
-	if err := isValidObjectName(objectName); err != nil {
-		return "", false, err
-	}
-
-	// Set content Type to default if empty string.
-	if contentType == "" {
-		contentType = "application/octet-stream"
+	if err := s3utils.CheckValidObjectName(objectName); err != nil {
+		return "", err
 	}
 
-	// Find upload id for previous upload for an object.
-	uploadID, err = c.findUploadID(bucketName, objectName)
+	// Initiate multipart upload for an object.
+	initMultipartUploadResult, err := c.initiateMultipartUpload(bucketName, objectName, metaData)
 	if err != nil {
-		return "", false, err
+		return "", err
 	}
-	if uploadID == "" {
-		// Initiate multipart upload for an object.
-		initMultipartUploadResult, err := c.initiateMultipartUpload(bucketName, objectName, contentType)
-		if err != nil {
-			return "", false, err
-		}
-		// Save the new upload id.
-		uploadID = initMultipartUploadResult.UploadID
-		// Indicate that this is a new upload id.
-		isNew = true
-	}
-	return uploadID, isNew, nil
-}
-
-// computeHash - Calculates hashes for an input read Seeker.
-func computeHash(hashAlgorithms map[string]hash.Hash, hashSums map[string][]byte, reader io.ReadSeeker) (size int64, err error) {
-	hashWriter := ioutil.Discard
-	for _, v := range hashAlgorithms {
-		hashWriter = io.MultiWriter(hashWriter, v)
-	}
-
-	// If no buffer is provided, no need to allocate just use io.Copy.
-	size, err = io.Copy(hashWriter, reader)
-	if err != nil {
-		return 0, err
-	}
-
-	// Seek back reader to the beginning location.
-	if _, err := reader.Seek(0, 0); err != nil {
-		return 0, err
-	}
-
-	for k, v := range hashAlgorithms {
-		hashSums[k] = v.Sum(nil)
-	}
-	return size, nil
+	return initMultipartUploadResult.UploadID, nil
 }

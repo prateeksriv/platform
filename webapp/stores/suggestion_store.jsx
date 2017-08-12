@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 import AppDispatcher from 'dispatcher/app_dispatcher.jsx';
@@ -10,6 +10,7 @@ const ActionTypes = Constants.ActionTypes;
 const COMPLETE_WORD_EVENT = 'complete_word';
 const PRETEXT_CHANGED_EVENT = 'pretext_changed';
 const SUGGESTIONS_CHANGED_EVENT = 'suggestions_changed';
+const POPOVER_MENTION_KEY_CLICK_EVENT = 'popover_mention_key_click';
 
 class SuggestionStore extends EventEmitter {
     constructor() {
@@ -26,6 +27,10 @@ class SuggestionStore extends EventEmitter {
         this.addCompleteWordListener = this.addCompleteWordListener.bind(this);
         this.removeCompleteWordListener = this.removeCompleteWordListener.bind(this);
         this.emitCompleteWord = this.emitCompleteWord.bind(this);
+
+        this.addPopoverMentionKeyClickListener = this.addPopoverMentionKeyClickListener.bind(this);
+        this.removePopoverMentionKeyClickListener = this.removePopoverMentionKeyClickListener.bind(this);
+        this.emitPopoverMentionKeyClick = this.emitPopoverMentionKeyClick.bind(this);
 
         this.handleEventPayload = this.handleEventPayload.bind(this);
         this.dispatchToken = AppDispatcher.register(this.handleEventPayload);
@@ -71,6 +76,16 @@ class SuggestionStore extends EventEmitter {
         this.emit(COMPLETE_WORD_EVENT + id, term, matchedPretext);
     }
 
+    addPopoverMentionKeyClickListener(id, callback) {
+        this.on(POPOVER_MENTION_KEY_CLICK_EVENT + id, callback);
+    }
+    removePopoverMentionKeyClickListener(id, callback) {
+        this.removeListener(POPOVER_MENTION_KEY_CLICK_EVENT + id, callback);
+    }
+    emitPopoverMentionKeyClick(isRHS, mentionKey) {
+        this.emit(POPOVER_MENTION_KEY_CLICK_EVENT + isRHS, mentionKey);
+    }
+
     registerSuggestionBox(id) {
         this.suggestions.set(id, {
             pretext: '',
@@ -87,7 +102,7 @@ class SuggestionStore extends EventEmitter {
     }
 
     clearSuggestions(id) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         suggestion.matchedPretext = [];
         suggestion.terms = [];
@@ -96,23 +111,23 @@ class SuggestionStore extends EventEmitter {
     }
 
     clearSelection(id) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         suggestion.selection = '';
     }
 
     hasSuggestions(id) {
-        return this.suggestions.get(id).terms.length > 0;
+        return this.getSuggestions(id).terms.length > 0;
     }
 
     setPretext(id, pretext) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         suggestion.pretext = pretext;
     }
 
     addSuggestion(id, term, item, component, matchedPretext) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         suggestion.terms.push(term);
         suggestion.items.push(item);
@@ -121,7 +136,7 @@ class SuggestionStore extends EventEmitter {
     }
 
     addSuggestions(id, terms, items, component, matchedPretext) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         suggestion.terms.push(...terms);
         suggestion.items.push(...items);
@@ -134,7 +149,7 @@ class SuggestionStore extends EventEmitter {
 
     // make sure that if suggestions exist, then one of them is selected. return true if the selection changes.
     ensureSelectionExists(id) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         if (suggestion.terms.length > 0) {
             // if the current selection is no longer in the map, select the first term in the list
@@ -153,11 +168,11 @@ class SuggestionStore extends EventEmitter {
     }
 
     getPretext(id) {
-        return this.suggestions.get(id).pretext;
+        return this.getSuggestions(id).pretext;
     }
 
     getSelectedMatchedPretext(id) {
-        const suggestion = this.suggestions.get(id);
+        const suggestion = this.getSuggestions(id);
 
         for (let i = 0; i < suggestion.terms.length; i++) {
             if (suggestion.terms[i] === suggestion.selection) {
@@ -169,23 +184,23 @@ class SuggestionStore extends EventEmitter {
     }
 
     getItems(id) {
-        return this.suggestions.get(id).items;
+        return this.getSuggestions(id).items;
     }
 
     getTerms(id) {
-        return this.suggestions.get(id).terms;
+        return this.getSuggestions(id).terms;
     }
 
     getComponents(id) {
-        return this.suggestions.get(id).components;
+        return this.getSuggestions(id).components;
     }
 
     getSuggestions(id) {
-        return this.suggestions.get(id);
+        return this.suggestions.get(id) || {};
     }
 
     getSelection(id) {
-        return this.suggestions.get(id).selection;
+        return this.getSuggestions(id).selection;
     }
 
     selectNext(id) {
@@ -217,15 +232,47 @@ class SuggestionStore extends EventEmitter {
         suggestion.selection = suggestion.terms[selectionIndex];
     }
 
+    checkIfPretextMatches(id, matchedPretext) {
+        const pretext = this.getPretext(id) || '';
+        return pretext.endsWith(matchedPretext);
+    }
+
+    setSuggestionsPending(id, pending) {
+        this.suggestions.get(id).suggestionsPending = pending;
+    }
+
+    areSuggestionsPending(id) {
+        return this.suggestions.get(id).suggestionsPending;
+    }
+
+    setCompletePending(id, pending) {
+        this.suggestions.get(id).completePending = pending;
+    }
+
+    isCompletePending(id) {
+        return this.suggestions.get(id).completePending;
+    }
+
+    completeWord(id, term = '', matchedPretext = '') {
+        this.emitCompleteWord(id, term || this.getSelection(id), matchedPretext || this.getSelectedMatchedPretext(id));
+
+        this.setPretext(id, '');
+        this.clearSuggestions(id);
+        this.clearSelection(id);
+        this.emitSuggestionsChanged(id);
+    }
+
     handleEventPayload(payload) {
-        const {type, id, ...other} = payload.action; // eslint-disable-line no-use-before-define
+        const {type, id, ...other} = payload.action;
 
         switch (type) {
         case ActionTypes.SUGGESTION_PRETEXT_CHANGED:
-            // Clear the suggestions if the pretext is empty or has whitespace
-            if (other.pretext === '' || (/\s/g.test(other.pretext))) {
+            // Clear the suggestions if the pretext is empty or ends with whitespace
+            if (other.pretext === '') {
                 this.clearSuggestions(id);
             }
+
+            other.pretext = other.pretext.toLowerCase();
 
             this.setPretext(id, other.pretext);
             this.emitPretextChanged(id, other.pretext);
@@ -234,15 +281,25 @@ class SuggestionStore extends EventEmitter {
             this.emitSuggestionsChanged(id);
             break;
         case ActionTypes.SUGGESTION_RECEIVED_SUGGESTIONS:
+            if (!this.checkIfPretextMatches(id, other.matchedPretext)) {
+                // These suggestions are out of date since the pretext has changed
+                return;
+            }
+
             this.clearSuggestions(id);
-
-            // ensure the matched pretext hasn't changed so that we don't receive suggestions for outdated pretext
             this.addSuggestions(id, other.terms, other.items, other.component, other.matchedPretext);
-
             this.ensureSelectionExists(id);
-            this.emitSuggestionsChanged(id);
+
+            this.setSuggestionsPending(id, false);
+
+            if (this.isCompletePending(id)) {
+                this.completeWord(id);
+            } else {
+                this.emitSuggestionsChanged(id);
+            }
             break;
         case ActionTypes.SUGGESTION_CLEAR_SUGGESTIONS:
+            this.setPretext(id, '');
             this.clearSuggestions(id);
             this.clearSelection(id);
             this.emitSuggestionsChanged(id);
@@ -256,12 +313,14 @@ class SuggestionStore extends EventEmitter {
             this.emitSuggestionsChanged(id);
             break;
         case ActionTypes.SUGGESTION_COMPLETE_WORD:
-            this.emitCompleteWord(id, other.term || this.getSelection(id), other.matchedPretext || this.getSelectedMatchedPretext(id));
-
-            this.setPretext(id, '');
-            this.clearSuggestions(id);
-            this.clearSelection(id);
-            this.emitSuggestionsChanged(id);
+            if (this.areSuggestionsPending(id)) {
+                this.setCompletePending(id, true);
+            } else {
+                this.completeWord(id, other.term, other.matchedPretext);
+            }
+            break;
+        case ActionTypes.POPOVER_MENTION_KEY_CLICK:
+            this.emitPopoverMentionKeyClick(other.isRHS, other.mentionKey);
             break;
         }
     }

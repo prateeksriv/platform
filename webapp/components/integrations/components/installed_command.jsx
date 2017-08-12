@@ -1,38 +1,59 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router';
 import {FormattedMessage} from 'react-intl';
 
-export default class InstalledCommand extends React.Component {
-    static get propTypes() {
-        return {
-            command: React.PropTypes.object.isRequired,
-            onRegenToken: React.PropTypes.func.isRequired,
-            onDelete: React.PropTypes.func.isRequired,
-            filter: React.PropTypes.string,
-            creator: React.PropTypes.object.isRequired
-        };
+import DeleteIntegration from './delete_integration.jsx';
+
+export default class InstalledCommand extends React.PureComponent {
+    static propTypes = {
+
+        /**
+        * The team data
+        */
+        team: PropTypes.object.isRequired,
+
+        /**
+        * Installed slash command to display
+        */
+        command: PropTypes.object.isRequired,
+
+        /**
+        * The function to call when Regenerate Token link is clicked
+        */
+        onRegenToken: PropTypes.func.isRequired,
+
+        /**
+        * The function to call when Delete link is clicked
+        */
+        onDelete: PropTypes.func.isRequired,
+
+        /**
+        * Set to filter command, comes from BackstageList
+        */
+        filter: PropTypes.string,
+
+        /**
+        * The creator user data
+        */
+        creator: PropTypes.object.isRequired,
+
+        /**
+        * Set to show edit link
+        */
+        canChange: PropTypes.bool.isRequired
     }
 
-    constructor(props) {
-        super(props);
-
-        this.handleRegenToken = this.handleRegenToken.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-
-        this.matchesFilter = this.matchesFilter.bind(this);
-    }
-
-    handleRegenToken(e) {
+    handleRegenToken = (e) => {
         e.preventDefault();
 
         this.props.onRegenToken(this.props.command);
     }
 
-    handleDelete(e) {
-        e.preventDefault();
-
+    handleDelete = () => {
         this.props.onDelete(this.props.command);
     }
 
@@ -55,6 +76,7 @@ export default class InstalledCommand extends React.Component {
         }
 
         let name;
+
         if (command.display_name) {
             name = command.display_name;
         } else {
@@ -80,6 +102,35 @@ export default class InstalledCommand extends React.Component {
         let trigger = '- /' + command.trigger;
         if (command.auto_complete && command.auto_complete_hint) {
             trigger += ' ' + command.auto_complete_hint;
+        }
+
+        let actions = null;
+        if (this.props.canChange) {
+            actions = (
+                <div className='item-actions'>
+                    <a
+                        href='#'
+                        onClick={this.handleRegenToken}
+                    >
+                        <FormattedMessage
+                            id='installed_integrations.regenToken'
+                            defaultMessage='Regenerate Token'
+                        />
+                    </a>
+                    {' - '}
+                    <Link to={`/${this.props.team.name}/integrations/commands/edit?id=${command.id}`}>
+                        <FormattedMessage
+                            id='installed_integrations.edit'
+                            defaultMessage='Edit'
+                        />
+                    </Link>
+                    {' - '}
+                    <DeleteIntegration
+                        messageId='installed_commands.delete.confirm'
+                        onDelete={this.handleDelete}
+                    />
+                </div>
+            );
         }
 
         return (
@@ -118,27 +169,7 @@ export default class InstalledCommand extends React.Component {
                         </span>
                     </div>
                 </div>
-                <div className='item-actions'>
-                    <a
-                        href='#'
-                        onClick={this.handleRegenToken}
-                    >
-                        <FormattedMessage
-                            id='installed_integrations.regenToken'
-                            defaultMessage='Regenerate Token'
-                        />
-                    </a>
-                    {' - '}
-                    <a
-                        href='#'
-                        onClick={this.handleDelete}
-                    >
-                        <FormattedMessage
-                            id='installed_integrations.delete'
-                            defaultMessage='Delete'
-                        />
-                    </a>
-                </div>
+                {actions}
             </div>
         );
     }

@@ -4,14 +4,26 @@
     @extend %popover-box-shadow;
     width: 100%;
     z-index: 100;
+
+    .suggestion-list__item {
+        &:hover {
+            background: alpha-color($black, .1);
+        }
+    }
 }
 
 .suggestion-list--top {
-    position: absolute;
     bottom: 100%;
+    position: absolute;
+}
+
+.suggestion-list--bottom {
+    height: 0;
+    position: relative;
 }
 
 .suggestion-list__content {
+    -webkit-overflow-scrolling: touch;
     background-color: $white;
     border: $border-gray;
     max-height: 292px;
@@ -19,7 +31,6 @@
     overflow-y: scroll;
     padding-bottom: 5px;
     width: 100%;
-    -webkit-overflow-scrolling: touch;
 
     .command {
         border-bottom: 1px solid $light-gray;
@@ -45,6 +56,10 @@
 
 .suggestion-list--bottom {
     position: relative;
+}
+
+.suggestion-loader {
+    margin: 6px 11px;
 }
 
 .suggestion-list__divider {

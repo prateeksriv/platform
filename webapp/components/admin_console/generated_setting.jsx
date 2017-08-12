@@ -1,4 +1,6 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+import PropTypes from 'prop-types';
+
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 import React from 'react';
@@ -10,15 +12,16 @@ import {FormattedMessage} from 'react-intl';
 export default class GeneratedSetting extends React.Component {
     static get propTypes() {
         return {
-            id: React.PropTypes.string.isRequired,
-            label: React.PropTypes.node.isRequired,
-            placeholder: React.PropTypes.string,
-            value: React.PropTypes.string.isRequired,
-            onChange: React.PropTypes.func.isRequired,
-            disabled: React.PropTypes.bool.isRequired,
-            disabledText: React.PropTypes.node,
-            helpText: React.PropTypes.node.isRequired,
-            regenerateText: React.PropTypes.node
+            id: PropTypes.string.isRequired,
+            label: PropTypes.node.isRequired,
+            placeholder: PropTypes.string,
+            value: PropTypes.string.isRequired,
+            onChange: PropTypes.func.isRequired,
+            disabled: PropTypes.bool.isRequired,
+            disabledText: PropTypes.node,
+            helpText: PropTypes.node.isRequired,
+            regenerateText: PropTypes.node,
+            regenerateHelpText: PropTypes.node
         };
     }
 
@@ -56,6 +59,15 @@ export default class GeneratedSetting extends React.Component {
             );
         }
 
+        let regenerateHelpText = null;
+        if (this.props.regenerateHelpText) {
+            regenerateHelpText = (
+                <div className='help-text'>
+                    {this.props.regenerateHelpText}
+                </div>
+            );
+        }
+
         return (
             <div className='form-group'>
                 <label
@@ -86,6 +98,7 @@ export default class GeneratedSetting extends React.Component {
                             {this.props.regenerateText}
                         </button>
                     </div>
+                    {regenerateHelpText}
                 </div>
             </div>
         );

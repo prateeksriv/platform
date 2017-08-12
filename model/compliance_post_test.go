@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 package model
@@ -23,5 +23,28 @@ func TestCompliancePost(t *testing.T) {
 
 	if r[len(r)-1] != "files" {
 		t.Fatal()
+	}
+}
+
+var cleanTests = []struct {
+	in       string
+	expected string
+}{
+	{"hello", "hello"},
+	{"=hello", "'=hello"},
+	{"+hello", "'+hello"},
+	{"-hello", "'-hello"},
+	{"  =hello", "'  =hello"},
+	{"  +hello", "'  +hello"},
+	{"  -hello", "'  -hello"},
+	{"\t  -hello", "'\t  -hello"},
+}
+
+func TestCleanComplianceStrings(t *testing.T) {
+	for _, tt := range cleanTests {
+		actual := cleanComplianceStrings(tt.in)
+		if actual != tt.expected {
+			t.Errorf("cleanComplianceStrings(%v): expected %v, actual %v", tt.in, tt.expected, actual)
+		}
 	}
 }

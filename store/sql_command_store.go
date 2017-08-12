@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 package store
@@ -8,10 +8,10 @@ import (
 )
 
 type SqlCommandStore struct {
-	*SqlStore
+	SqlStore
 }
 
-func NewSqlCommandStore(sqlStore *SqlStore) CommandStore {
+func NewSqlCommandStore(sqlStore SqlStore) CommandStore {
 	s := &SqlCommandStore{sqlStore}
 
 	for _, db := range sqlStore.GetAllConns() {
@@ -125,6 +125,24 @@ func (s SqlCommandStore) Delete(commandId string, time int64) StoreChannel {
 		_, err := s.GetMaster().Exec("Update Commands SET DeleteAt = :DeleteAt, UpdateAt = :UpdateAt WHERE Id = :Id", map[string]interface{}{"DeleteAt": time, "UpdateAt": time, "Id": commandId})
 		if err != nil {
 			result.Err = model.NewLocAppError("SqlCommandStore.Delete", "store.sql_command.save.delete.app_error", nil, "id="+commandId+", err="+err.Error())
+		}
+
+		storeChannel <- result
+		close(storeChannel)
+	}()
+
+	return storeChannel
+}
+
+func (s SqlCommandStore) PermanentDeleteByTeam(teamId string) StoreChannel {
+	storeChannel := make(StoreChannel, 1)
+
+	go func() {
+		result := StoreResult{}
+
+		_, err := s.GetMaster().Exec("DELETE FROM Commands WHERE TeamId = :TeamId", map[string]interface{}{"TeamId": teamId})
+		if err != nil {
+			result.Err = model.NewLocAppError("SqlCommandStore.DeleteByTeam", "store.sql_command.save.delete_perm.app_error", nil, "id="+teamId+", err="+err.Error())
 		}
 
 		storeChannel <- result

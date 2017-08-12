@@ -1,15 +1,71 @@
-// Copyright (c) 2016 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
-import AppDispatcher from '../dispatcher/app_dispatcher.jsx';
+import AppDispatcher from 'dispatcher/app_dispatcher.jsx';
 import Constants from 'utils/constants.jsx';
 import EventEmitter from 'events';
+import * as Emoji from 'utils/emoji.jsx';
 
-import EmojiJson from 'utils/emoji.json';
+import store from 'stores/redux_store.jsx';
+import {getCustomEmojisByName} from 'mattermost-redux/selectors/entities/emojis';
+import {Client4} from 'mattermost-redux/client';
 
 const ActionTypes = Constants.ActionTypes;
 
 const CHANGE_EVENT = 'changed';
+const MAXIMUM_RECENT_EMOJI = 27;
+
+// Wrap the contents of the store so that we don't need to construct an ES6 map where most of the content
+// (the system emojis) will never change. It provides the get/has functions of a map and an iterator so
+// that it can be used in for..of loops
+export class EmojiMap {
+    constructor(customEmojis) {
+        this.customEmojis = customEmojis;
+
+        // Store customEmojis to an array so we can iterate it more easily
+        this.customEmojisArray = [...customEmojis];
+    }
+
+    has(name) {
+        return Emoji.EmojiIndicesByAlias.has(name) || this.customEmojis.has(name);
+    }
+
+    get(name) {
+        if (Emoji.EmojiIndicesByAlias.has(name)) {
+            return Emoji.Emojis[Emoji.EmojiIndicesByAlias.get(name)];
+        }
+
+        return this.customEmojis.get(name);
+    }
+
+    [Symbol.iterator]() {
+        const customEmojisArray = this.customEmojisArray;
+
+        return {
+            systemIndex: 0,
+            customIndex: 0,
+            next() {
+                if (this.systemIndex < Emoji.Emojis.length) {
+                    const emoji = Emoji.Emojis[this.systemIndex];
+
+                    this.systemIndex += 1;
+
+                    return {value: [emoji.aliases[0], emoji]};
+                }
+
+                if (this.customIndex < customEmojisArray.length) {
+                    const emoji = customEmojisArray[this.customIndex][1];
+
+                    this.customIndex += 1;
+
+                    return {value: [emoji.name, emoji]};
+                }
+
+                return {done: true};
+            }
+        };
+    }
+}
 
 class EmojiStore extends EventEmitter {
     constructor() {
@@ -19,18 +75,20 @@ class EmojiStore extends EventEmitter {
 
         this.setMaxListeners(600);
 
-        this.emojis = new Map(EmojiJson);
-        this.systemEmojis = new Map(EmojiJson);
+        this.map = new EmojiMap(getCustomEmojisByName(store.getState()));
 
-        this.unicodeEmojis = new Map();
-        for (const [, emoji] of this.systemEmojis) {
-            if (emoji.unicode) {
-                this.unicodeEmojis.set(emoji.unicode, emoji);
+        this.entities = {};
+
+        store.subscribe(() => {
+            const newEntities = store.getState().entities.emojis.customEmoji;
+
+            if (newEntities !== this.entities) {
+                this.map = new EmojiMap(getCustomEmojisByName(store.getState()));
+                this.emitChange();
             }
-        }
 
-        this.receivedCustomEmojis = false;
-        this.customEmojis = new Map();
+            this.entities = newEntities;
+        });
     }
 
     addChangeListener(callback) {
@@ -45,83 +103,90 @@ class EmojiStore extends EventEmitter {
         this.emit(CHANGE_EVENT);
     }
 
-    hasReceivedCustomEmojis() {
-        return this.receivedCustomEmojis;
-    }
-
-    setCustomEmojis(customEmojis) {
-        this.customEmojis = new Map();
-
-        for (const emoji of customEmojis) {
-            this.addCustomEmoji(emoji);
-        }
-
-        this.sortCustomEmojis();
-        this.updateEmojiMap();
-    }
-
-    addCustomEmoji(emoji) {
-        this.customEmojis.set(emoji.name, emoji);
-
-        // this doesn't update this.emojis, but it's only called by setCustomEmojis which does that afterwards
-    }
-
-    removeCustomEmoji(id) {
-        for (const [name, emoji] of this.customEmojis) {
-            if (emoji.id === id) {
-                this.customEmojis.delete(name);
-                break;
-            }
-        }
-
-        this.updateEmojiMap();
-    }
-
-    sortCustomEmojis() {
-        this.customEmojis = new Map([...this.customEmojis.entries()].sort((a, b) => a[0].localeCompare(b[0])));
-    }
-
-    updateEmojiMap() {
-        // add custom emojis to the map first so that they can't override system ones
-        this.emojis = new Map([...this.customEmojis, ...this.systemEmojis]);
-    }
-
-    getSystemEmojis() {
-        return this.systemEmojis;
+    hasSystemEmoji(name) {
+        return Emoji.EmojiIndicesByAlias.has(name);
     }
 
     getCustomEmojiMap() {
-        return this.customEmojis;
+        return getCustomEmojisByName(store.getState());
     }
 
     getEmojis() {
-        return this.emojis;
+        return this.map;
     }
 
     has(name) {
-        return this.emojis.has(name);
+        return this.map.has(name);
     }
 
     get(name) {
-        // prioritize system emojis so that custom ones can't override them
-        return this.emojis.get(name);
+        return this.map.get(name);
+    }
+
+    addRecentEmoji(alias) {
+        const recentEmojis = this.getRecentEmojis();
+
+        let name;
+        const emoji = this.get(alias);
+        if (!emoji) {
+            return;
+        } else if (emoji.name) {
+            name = emoji.name;
+        } else {
+            name = emoji.aliases[0];
+        }
+
+        const index = recentEmojis.indexOf(name);
+        if (index !== -1) {
+            recentEmojis.splice(index, 1);
+        }
+
+        recentEmojis.push(name);
+
+        if (recentEmojis.length > MAXIMUM_RECENT_EMOJI) {
+            recentEmojis.splice(0, recentEmojis.length - MAXIMUM_RECENT_EMOJI);
+        }
+
+        localStorage.setItem(Constants.RECENT_EMOJI_KEY, JSON.stringify(recentEmojis));
+    }
+
+    getRecentEmojis() {
+        let recentEmojis;
+        try {
+            recentEmojis = JSON.parse(localStorage.getItem(Constants.RECENT_EMOJI_KEY));
+        } catch (e) {
+            // Errors are handled below
+        }
+
+        if (!recentEmojis) {
+            return [];
+        }
+
+        if (recentEmojis.length > 0 && typeof recentEmojis[0] === 'object') {
+            // Prior to PLT-7267, recent emojis were stored with the entire object for the emoji, but this
+            // has been changed to store only the names of the emojis, so we need to change that
+            recentEmojis = recentEmojis.map((emoji) => {
+                return emoji.name || emoji.aliases[0];
+            });
+        }
+
+        return recentEmojis;
     }
 
     hasUnicode(codepoint) {
-        return this.unicodeEmojis.has(codepoint);
+        return Emoji.EmojiIndicesByUnicode.has(codepoint);
     }
 
     getUnicode(codepoint) {
-        return this.unicodeEmojis.get(codepoint);
+        return Emoji.Emojis[Emoji.EmojiIndicesByUnicode.get(codepoint)];
     }
 
     getEmojiImageUrl(emoji) {
         if (emoji.id) {
-            // must match Client.getCustomEmojiImageUrl
-            return `/api/v3/emoji/${emoji.id}`;
+            return Client4.getUrlVersion() + '/emoji/' + emoji.id + '/image';
         }
 
-        const filename = emoji.unicode || emoji.filename || emoji.name;
+        const filename = emoji.filename || emoji.aliases[0];
 
         return Constants.EMOJI_PATH + '/' + filename + '.png';
     }
@@ -130,17 +195,8 @@ class EmojiStore extends EventEmitter {
         const action = payload.action;
 
         switch (action.type) {
-        case ActionTypes.RECEIVED_CUSTOM_EMOJIS:
-            this.setCustomEmojis(action.emojis);
-            this.receivedCustomEmojis = true;
-            this.emitChange();
-            break;
-        case ActionTypes.RECEIVED_CUSTOM_EMOJI:
-            this.addCustomEmoji(action.emoji);
-            this.emitChange();
-            break;
-        case ActionTypes.REMOVED_CUSTOM_EMOJI:
-            this.removeCustomEmoji(action.id);
+        case ActionTypes.EMOJI_POSTED:
+            this.addRecentEmoji(action.alias);
             this.emitChange();
             break;
         }

@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 import React from 'react';
@@ -25,6 +25,9 @@ export default class StorageSettings extends AdminSettings {
     }
 
     getConfigFromState(config) {
+        config.FileSettings.EnableFileAttachments = this.state.enableFileAttachments;
+        config.FileSettings.EnableMobileUpload = this.state.enableMobileUpload;
+        config.FileSettings.EnableMobileDownload = this.state.enableMobileDownload;
         config.FileSettings.MaxFileSize = this.parseInt(this.state.maxFileSize) * 1024 * 1024;
         config.FileSettings.DriverName = this.state.driverName;
         config.FileSettings.Directory = this.state.directory;
@@ -33,12 +36,16 @@ export default class StorageSettings extends AdminSettings {
         config.FileSettings.AmazonS3Bucket = this.state.amazonS3Bucket;
         config.FileSettings.AmazonS3Endpoint = this.state.amazonS3Endpoint;
         config.FileSettings.AmazonS3SSL = this.state.amazonS3SSL;
+        config.FileSettings.AmazonS3SSE = this.state.amazonS3SSE;
 
         return config;
     }
 
     getStateFromConfig(config) {
         return {
+            enableFileAttachments: config.FileSettings.EnableFileAttachments,
+            enableMobileUpload: config.FileSettings.EnableMobileUpload,
+            enableMobileDownload: config.FileSettings.EnableMobileDownload,
             maxFileSize: config.FileSettings.MaxFileSize / 1024 / 1024,
             driverName: config.FileSettings.DriverName,
             directory: config.FileSettings.Directory,
@@ -46,22 +53,68 @@ export default class StorageSettings extends AdminSettings {
             amazonS3SecretAccessKey: config.FileSettings.AmazonS3SecretAccessKey,
             amazonS3Bucket: config.FileSettings.AmazonS3Bucket,
             amazonS3Endpoint: config.FileSettings.AmazonS3Endpoint,
-            amazonS3SSL: config.FileSettings.AmazonS3SSL
+            amazonS3SSL: config.FileSettings.AmazonS3SSL,
+            amazonS3SSE: config.FileSettings.AmazonS3SSE
         };
     }
 
     renderTitle() {
         return (
-            <h3>
-                <FormattedMessage
-                    id='admin.files.storage'
-                    defaultMessage='Storage'
-                />
-            </h3>
+            <FormattedMessage
+                id='admin.files.storage'
+                defaultMessage='Storage'
+            />
         );
     }
 
     renderSettings() {
+        const mobileUploadDownloadSettings = [];
+        if (window.mm_license.IsLicensed === 'true' && window.mm_license.Compliance === 'true') {
+            mobileUploadDownloadSettings.push(
+                <BooleanSetting
+                    key='enableMobileUpload'
+                    id='enableMobileUpload'
+                    label={
+                        <FormattedMessage
+                            id='admin.file.enableMobileUploadTitle'
+                            defaultMessage='Allow File Uploads on Mobile:'
+                        />
+                    }
+                    helpText={
+                        <FormattedMessage
+                            id='admin.file.enableMobileUploadDesc'
+                            defaultMessage='When false, disables file uploads on mobile apps. If Allow File Sharing is set to true, users can still upload files from a mobile web browser.'
+                        />
+                    }
+                    value={this.state.enableMobileUpload}
+                    onChange={this.handleChange}
+                    disabled={!this.state.enableFileAttachments}
+                />
+            );
+
+            mobileUploadDownloadSettings.push(
+                <BooleanSetting
+                    key='enableMobileDownload'
+                    id='enableMobileDownload'
+                    label={
+                        <FormattedMessage
+                            id='admin.file.enableMobileDownloadTitle'
+                            defaultMessage='Allow File Downloads on Mobile:'
+                        />
+                    }
+                    helpText={
+                        <FormattedMessage
+                            id='admin.file.enableMobileDownloadDesc'
+                            defaultMessage='When false, disables file downloads on mobile apps. Users can still download files from a mobile web browser.'
+                        />
+                    }
+                    value={this.state.enableMobileDownload}
+                    onChange={this.handleChange}
+                    disabled={!this.state.enableFileAttachments}
+                />
+            );
+        }
+
         return (
             <SettingsGroup>
                 <DropdownSetting
@@ -201,6 +254,43 @@ export default class StorageSettings extends AdminSettings {
                     onChange={this.handleChange}
                     disabled={this.state.driverName !== DRIVER_S3}
                 />
+                <BooleanSetting
+                    id='AmazonSSE'
+                    label={
+                        <FormattedMessage
+                            id='admin.image.AmazonSSETitle'
+                            defaultMessage='Enable Server-Side Encryption for Amazon S3:'
+                        />
+                    }
+                    placeholder={Utils.localizeMessage('admin.image.AmazonSSEExample', 'Ex "false"')}
+                    helpText={
+                        <FormattedMessage
+                            id='admin.image.AmazonSSEDescription'
+                            defaultMessage='When true, encrypt files in Amazon S3 using server-side encryption with Amazon S3-managed keys. See <a href="https://about.mattermost.com/default-server-side-encryption" target="_blank">documentation</a> to learn more.'
+                        />
+                    }
+                    value={this.state.AmazonSSE}
+                    onChange={this.handleChange}
+                    disabled={this.state.driverName !== DRIVER_S3}
+                />
+                <BooleanSetting
+                    id='enableFileAttachments'
+                    label={
+                        <FormattedMessage
+                            id='admin.file.enableFileAttachments'
+                            defaultMessage='Allow File Sharing:'
+                        />
+                    }
+                    helpText={
+                        <FormattedMessage
+                            id='admin.file.enableFileAttachmentsDesc'
+                            defaultMessage='When false, disables file sharing on the server. All file and image uploads on messages are forbidden across clients and devices, including mobile.'
+                        />
+                    }
+                    value={this.state.enableFileAttachments}
+                    onChange={this.handleChange}
+                />
+                {mobileUploadDownloadSettings}
                 <TextSetting
                     id='maxFileSize'
                     label={
@@ -218,6 +308,7 @@ export default class StorageSettings extends AdminSettings {
                     }
                     value={this.state.maxFileSize}
                     onChange={this.handleChange}
+                    disabled={!this.state.enableFileAttachments}
                 />
             </SettingsGroup>
         );

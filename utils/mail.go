@@ -1,25 +1,23 @@
-// Copyright (c) 2015 Mattermost, Inc. All Rights Reserved.
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See License.txt for license information.
 
 package utils
 
 import (
 	"crypto/tls"
-	"encoding/base64"
 	"fmt"
-	l4g "github.com/alecthomas/log4go"
-	"github.com/mattermost/platform/model"
+	"mime"
 	"net"
 	"net/mail"
 	"net/smtp"
 	"time"
+
+	l4g "github.com/alecthomas/log4go"
+	"github.com/mattermost/platform/model"
 )
 
 func encodeRFC2047Word(s string) string {
-	// TODO: use `mime.BEncoding.Encode` instead when `go` >= 1.5
-	// return mime.BEncoding.Encode("utf-8", s)
-	dst := base64.StdEncoding.EncodeToString([]byte(s))
-	return "=?utf-8?b?" + dst + "?="
+	return mime.BEncoding.Encode("utf-8", s)
 }
 
 func connectToSMTPServer(config *model.Config) (net.Conn, *model.AppError) {
@@ -28,7 +26,7 @@ func connectToSMTPServer(config *model.Config) (net.Conn, *model.AppError) {
 
 	if config.EmailSettings.ConnectionSecurity == model.CONN_SECURITY_TLS {
 		tlsconfig := &tls.Config{
-			InsecureSkipVerify: true,
+			InsecureSkipVerify: *config.EmailSettings.SkipServerCertificateVerification,
 			ServerName:         config.EmailSettings.SMTPServer,
 		}
 
@@ -52,22 +50,27 @@ func newSMTPClient(conn net.Conn, config *model.Config) (*smtp.Client, *model.Ap
 		l4g.Error(T("utils.mail.new_client.open.error"), err)
 		return nil, model.NewLocAppError("SendMail", "utils.mail.connect_smtp.open_tls.app_error", nil, err.Error())
 	}
-	auth := smtp.PlainAuth("", config.EmailSettings.SMTPUsername, config.EmailSettings.SMTPPassword, config.EmailSettings.SMTPServer+":"+config.EmailSettings.SMTPPort)
-	if config.EmailSettings.ConnectionSecurity == model.CONN_SECURITY_TLS {
-		if err = c.Auth(auth); err != nil {
-			return nil, model.NewLocAppError("SendMail", "utils.mail.new_client.auth.app_error", nil, err.Error())
+
+	hostname := GetHostnameFromSiteURL(*config.ServiceSettings.SiteURL)
+	if hostname != "" {
+		err := c.Hello(hostname)
+		if err != nil {
+			l4g.Error(T("utils.mail.new_client.helo.error"), err)
+			return nil, model.NewLocAppError("SendMail", "utils.mail.connect_smtp.helo.app_error", nil, err.Error())
 		}
-	} else if config.EmailSettings.ConnectionSecurity == model.CONN_SECURITY_STARTTLS {
+	}
+
+	if config.EmailSettings.ConnectionSecurity == model.CONN_SECURITY_STARTTLS {
 		tlsconfig := &tls.Config{
-			InsecureSkipVerify: true,
+			InsecureSkipVerify: *config.EmailSettings.SkipServerCertificateVerification,
 			ServerName:         config.EmailSettings.SMTPServer,
 		}
 		c.StartTLS(tlsconfig)
-		if err = c.Auth(auth); err != nil {
-			return nil, model.NewLocAppError("SendMail", "utils.mail.new_client.auth.app_error", nil, err.Error())
-		}
-	} else if config.EmailSettings.ConnectionSecurity == model.CONN_SECURITY_PLAIN {
-		// note: go library only supports PLAIN auth over non-tls connections
+	}
+
+	if *config.EmailSettings.EnableSMTPAuth {
+		auth := smtp.PlainAuth("", config.EmailSettings.SMTPUsername, config.EmailSettings.SMTPPassword, config.EmailSettings.SMTPServer+":"+config.EmailSettings.SMTPPort)
+
 		if err = c.Auth(auth); err != nil {
 			return nil, model.NewLocAppError("SendMail", "utils.mail.new_client.auth.app_error", nil, err.Error())
 		}
@@ -107,8 +110,8 @@ func SendMailUsingConfig(to, subject, body string, config *model.Config) *model.
 
 	l4g.Debug(T("utils.mail.send_mail.sending.debug"), to, subject)
 
-	fromMail := mail.Address{config.EmailSettings.FeedbackName, config.EmailSettings.FeedbackEmail}
-	toMail := mail.Address{"", to}
+	fromMail := mail.Address{Name: config.EmailSettings.FeedbackName, Address: config.EmailSettings.FeedbackEmail}
+	toMail := mail.Address{Name: "", Address: to}
 
 	headers := make(map[string]string)
 	headers["From"] = fromMail.String()

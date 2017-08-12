@@ -49,19 +49,19 @@
   },
   {
     "id": "api.admin.add_certificate.no_file.app_error",
-    "translation": "요청의 'certificate' 항목에 파일이 없습니다."
+    "translation": "요청된 '인증서' 항목의 파일이 없습니다."
   },
   {
     "id": "api.admin.add_certificate.open.app_error",
-    "translation": "인증서를 열 수 없습니다."
+    "translation": "인증서 파일을 열 수 없습니다."
   },
   {
     "id": "api.admin.add_certificate.saving.app_error",
-    "translation": "인증서를 저장할 수 없습니다"
+    "translation": "인증서 파일을 저장할 수 없습니다."
   },
   {
     "id": "api.admin.file_read_error",
-    "translation": "로그 파일을 읽는데 오류가 발생했습니다"
+    "translation": "로그 파일을 읽는데 오류가 발생했습니다."
   },
   {
     "id": "api.admin.get_brand_image.not_available.app_error",
@@ -77,7 +77,7 @@
   },
   {
     "id": "api.admin.recycle_db_end.warn",
-    "translation": "DB 연결 재사용 완료"
+    "translation": "DB 연결 재사용을 완료했습니다."
   },
   {
     "id": "api.admin.recycle_db_start.warn",
@@ -89,7 +89,7 @@
   },
   {
     "id": "api.admin.saml.metadata.app_error",
-    "translation": "서비스 제공자 메타데이터를 빌드하는 중 오류가 발생했습니다."
+    "translation": "서비스 제공 메타 데이터를 만드는 중 오류가 발생하였습니다."
   },
   {
     "id": "api.admin.test_email.body",
@@ -148,6 +148,10 @@
     "translation": "권한을 확인하기 위한 유저 정보를 가져올 수 없습니다."
   },
   {
+    "id": "api.brand.init.debug",
+    "translation": "명령어 API 경로 초기화 중"
+  },
+  {
     "id": "api.channel.add_member.added",
     "translation": "%v 이/가 %v에 의해 채널에 추가되었습니다"
   },
@@ -181,11 +185,11 @@
   },
   {
     "id": "api.channel.can_manage_channel.private_restricted_system_admin.app_error",
-    "translation": "비공개 그룹 생성, 관리는 시스템 관리자 권한이 필요합니다."
+    "translation": "공개 채널의 생성 및 관리는 시스템 관리자 권한이 필요합니다."
   },
   {
     "id": "api.channel.can_manage_channel.private_restricted_team_admin.app_error",
-    "translation": "비공개 그룹 생성, 관리는 팀 관리자 또는 시스템 관리자 권한이 필요합니다."
+    "translation": "비공개 채널 생성 및 관리 권한은 팀 관리자 및 시스템 관리자에게만 주어집니다."
   },
   {
     "id": "api.channel.can_manage_channel.public_restricted_system_admin.app_error",
@@ -197,7 +201,7 @@
   },
   {
     "id": "api.channel.create_channel.direct_channel.app_error",
-    "translation": "개인 메시지 채널을 만들기 위해선 반드시 createDirectChannel API 서비스를 이용해야 합니다"
+    "translation": "개인 메시지 채널을 만들기 위해서는 반드시 createDirectChannel API 서비스를 이용해야 함"
   },
   {
     "id": "api.channel.create_channel.invalid_character.app_error",
@@ -209,15 +213,23 @@
   },
   {
     "id": "api.channel.create_default_channels.off_topic",
-    "translation": "잡담방"
+    "translation": "잡담"
   },
   {
     "id": "api.channel.create_default_channels.town_square",
-    "translation": "광장"
+    "translation": "공지사항"
   },
   {
     "id": "api.channel.create_direct_channel.invalid_user.app_error",
-    "translation": "사용자 아이디가 적합하지 않습니다"
+    "translation": "개인 메시지 채널에 적합하지 않은 사용자 ID"
+  },
+  {
+    "id": "api.channel.create_group.bad_size.app_error",
+    "translation": "그룹 메세지 채널은 최소 3명에서 최대 8명까지의 사용자를 포함해야 합니다."
+  },
+  {
+    "id": "api.channel.create_group.bad_user.app_error",
+    "translation": "제공된 사용자 중 존재하지 않는 사용자가 있습니다."
   },
   {
     "id": "api.channel.delete_channel.archived",
@@ -276,6 +288,10 @@
     "translation": "채널 API 경로 초기화 중"
   },
   {
+    "id": "api.channel.join_channel.already_deleted.app_error",
+    "translation": "채널이 이미 삭제되었습니다"
+  },
+  {
     "id": "api.channel.join_channel.permissions.app_error",
     "translation": "사용 권한이 없습니다."
   },
@@ -300,8 +316,20 @@
     "translation": "%v 가 채널을 떠났습니다."
   },
   {
-    "id": "api.channel.post_update_channel_header_message_and_forget.join_leave.error",
-    "translation": "메시지 %v 를 포스트 하는 데 실패하였습니다"
+    "id": "api.channel.post_update_channel_displayname_message_and_forget.create_post.error",
+    "translation": "displayname 업데이트 메시지 등록 실패"
+  },
+  {
+    "id": "api.channel.post_update_channel_displayname_message_and_forget.retrieve_user.error",
+    "translation": "채널 DisplayName 란을 업데이트 중 사용자를 가져오는 데 실패함"
+  },
+  {
+    "id": "api.channel.post_update_channel_displayname_message_and_forget.updated_from",
+    "translation": "%s 이(가) 채널 표시명을 %s에서 %s(으)로 갱신함"
+  },
+  {
+    "id": "api.channel.post_update_channel_header_message_and_forget.post.error",
+    "translation": "채널 헤더 업데이트 표시 실패"
   },
   {
     "id": "api.channel.post_update_channel_header_message_and_forget.removed",
@@ -309,7 +337,7 @@
   },
   {
     "id": "api.channel.post_update_channel_header_message_and_forget.retrieve_user.error",
-    "translation": "업데이트 채널 헤더 메시지 %v을(를) 저장 시도중 사용자를 가져오는데 실패했습니다"
+    "translation": "채널 헤더 업데이트 중 사용자를 가져오는 데 실패함"
   },
   {
     "id": "api.channel.post_update_channel_header_message_and_forget.updated_from",
@@ -321,7 +349,11 @@
   },
   {
     "id": "api.channel.post_user_add_remove_message_and_forget.error",
-    "translation": "메시지 %v 를 포스트 하는 데 실패하였습니다"
+    "translation": "들어옴/나감 메시지를 등록하는 데 실패함"
+  },
+  {
+    "id": "api.channel.remove.default.app_error",
+    "translation": "기본 채널로부터는 사용자를 강퇴할 수 없음 {{.Channel}}"
   },
   {
     "id": "api.channel.remove_member.permissions.app_error",
@@ -356,8 +388,12 @@
     "translation": "기본 채널 {{.Channel}}에 적절하지 않은 갱신을 시도했습니다"
   },
   {
-    "id": "api.channel.update_last_viewed_at.get_unread_count_for_channel.errord",
+    "id": "api.channel.update_last_viewed_at.get_unread_count_for_channel.error",
     "translation": "읽지 않은 메시지 갯수를 가져오지 못했습니다. user_id=%v and channel_id=%v, err=%v"
+  },
+  {
+    "id": "api.cluster.init.debug",
+    "translation": "클러스터 API 경로 초기화 중"
   },
   {
     "id": "api.command.admin_only.app_error",
@@ -393,7 +429,7 @@
   },
   {
     "id": "api.command.execute_command.not_found.app_error",
-    "translation": "트리거 '{{.Trigger}}'에 의한 명령어를 찾을 수 없습니다"
+    "translation": "Command with a trigger of '{{.Trigger}}' not found. To send a message beginning with \"/\", try adding an empty space at the beginning of the message."
   },
   {
     "id": "api.command.execute_command.save.app_error",
@@ -405,7 +441,7 @@
   },
   {
     "id": "api.command.init.debug",
-    "translation": "명령 API 경로 초기화 중"
+    "translation": "명령어 API 경로 초기화 중"
   },
   {
     "id": "api.command.invite_people.desc",
@@ -424,6 +460,10 @@
     "translation": "[name@domain.com ...]"
   },
   {
+    "id": "api.command.invite_people.invite_off",
+    "translation": "이 서버의 사용자 생성는 중지되어 있습니다. 초대가 보내지지 않습니다"
+  },
+  {
     "id": "api.command.invite_people.name",
     "translation": "초대하기"
   },
@@ -440,6 +480,14 @@
     "translation": "명령어 토큰을 재생성할 권한 없음"
   },
   {
+    "id": "api.command.team_mismatch.app_error",
+    "translation": "팀들간의 명령어를 업데이트 할 수 없음"
+  },
+  {
+    "id": "api.command.update.app_error",
+    "translation": "명령어 업데이트 권한 없음"
+  },
+  {
     "id": "api.command_away.desc",
     "translation": "현재 상태를 자리비움으로 설정합니다."
   },
@@ -452,12 +500,132 @@
     "translation": "이제 자리비움 상태입니다."
   },
   {
+    "id": "api.command_channel_header.channel.app_error",
+    "translation": "현재 채널을 찾는 중 오류가 발생하였습니다."
+  },
+  {
+    "id": "api.command_channel_header.desc",
+    "translation": "채널 머릿말 수정"
+  },
+  {
+    "id": "api.command_channel_header.hint",
+    "translation": "[text]"
+  },
+  {
+    "id": "api.command_channel_header.message.app_error",
+    "translation": "문장은 /header 명령과 함께 입력되어야 합니다."
+  },
+  {
+    "id": "api.command_channel_header.name",
+    "translation": "header"
+  },
+  {
+    "id": "api.command_channel_header.permission.app_error",
+    "translation": "당신은 채널 머릿말을 수정할 권한을 가지고 있지 않습니다."
+  },
+  {
+    "id": "api.command_channel_header.update_channel.app_error",
+    "translation": "현재 채널의 업데이트에 실패하였습니다."
+  },
+  {
+    "id": "api.command_channel_header.update_channel.success",
+    "translation": "채널 머릿말이 성공적으로 업데이트되었습니다."
+  },
+  {
+    "id": "api.command_channel_purpose.channel.app_error",
+    "translation": "현재 채널을 찾는 중 오류가 발생하였습니다."
+  },
+  {
+    "id": "api.command_channel_purpose.desc",
+    "translation": "Edit the channel purpose"
+  },
+  {
+    "id": "api.command_channel_purpose.direct_group.app_error",
+    "translation": "Cannot set purpose for direct message channels. Use /header to set the header instead."
+  },
+  {
+    "id": "api.command_channel_purpose.hint",
+    "translation": "[text]"
+  },
+  {
+    "id": "api.command_channel_purpose.message.app_error",
+    "translation": "메시지는 /echo 명령어와 함께 제공되어야 합니다."
+  },
+  {
+    "id": "api.command_channel_purpose.name",
+    "translation": "purpose"
+  },
+  {
+    "id": "api.command_channel_purpose.permission.app_error",
+    "translation": "당신은 채널 머릿말을 수정할 권한을 가지고 있지 않습니다."
+  },
+  {
+    "id": "api.command_channel_purpose.update_channel.app_error",
+    "translation": "현재 채널의 업데이트에 실패하였습니다."
+  },
+  {
+    "id": "api.command_channel_rename.channel.app_error",
+    "translation": "현재 채널을 찾는 중 오류가 발생하였습니다."
+  },
+  {
+    "id": "api.command_channel_rename.desc",
+    "translation": "Rename the channel"
+  },
+  {
+    "id": "api.command_channel_rename.direct_group.app_error",
+    "translation": "개인 메시지 채널은 나갈 수 없습니다"
+  },
+  {
+    "id": "api.command_channel_rename.hint",
+    "translation": "[text]"
+  },
+  {
+    "id": "api.command_channel_rename.message.app_error",
+    "translation": "메시지는 /echo 명령어와 함께 제공되어야 합니다."
+  },
+  {
+    "id": "api.command_channel_rename.name",
+    "translation": "rename"
+  },
+  {
+    "id": "api.command_channel_rename.permission.app_error",
+    "translation": "당신은 채널 머릿말을 수정할 권한을 가지고 있지 않습니다."
+  },
+  {
+    "id": "api.command_channel_rename.update_channel.app_error",
+    "translation": "현재 채널의 업데이트에 실패하였습니다."
+  },
+  {
+    "id": "api.command_channel_rename.update_channel.success",
+    "translation": "채널 머릿말이 성공적으로 업데이트되었습니다."
+  },
+  {
+    "id": "api.command_code.desc",
+    "translation": "Display text as a code block"
+  },
+  {
+    "id": "api.command_code.hint",
+    "translation": "[text]"
+  },
+  {
+    "id": "api.command_code.message.app_error",
+    "translation": "메시지는 /echo 명령어와 함께 제공되어야 합니다."
+  },
+  {
+    "id": "api.command_code.name",
+    "translation": "code"
+  },
+  {
     "id": "api.command_collapse.desc",
     "translation": "이미지 미리보기를 자동으로 접습니다"
   },
   {
     "id": "api.command_collapse.name",
     "translation": "닫기"
+  },
+  {
+    "id": "api.command_collapse.success",
+    "translation": "이미지 링크가 기본값으로 접히도록 설정됨"
   },
   {
     "id": "api.command_echo.create.app_error",
@@ -480,6 +648,10 @@
     "translation": "'메시지' [딜레이(초)]"
   },
   {
+    "id": "api.command_echo.message.app_error",
+    "translation": "메시지는 /echo 명령어와 함께 제공되어야 합니다."
+  },
+  {
     "id": "api.command_echo.name",
     "translation": "에코"
   },
@@ -492,8 +664,20 @@
     "translation": "확장"
   },
   {
+    "id": "api.command_expand.success",
+    "translation": "이미지 링크가 기본값으로 펼쳐지도록 설정됨"
+  },
+  {
     "id": "api.command_expand_collapse.fail.app_error",
-    "translation": "미리보기를 확장하는 중 오류가 발생하였습니다"
+    "translation": "미리보기를 펼치는 중 오류가 발생하였습니다."
+  },
+  {
+    "id": "api.command_help.desc",
+    "translation": "Mattermost 도움말 페이지 열기"
+  },
+  {
+    "id": "api.command_help.name",
+    "translation": "help"
   },
   {
     "id": "api.command_join.desc",
@@ -509,7 +693,7 @@
   },
   {
     "id": "api.command_join.list.app_error",
-    "translation": "채널 목록을 나열하는 중 오류가 발생했습니다."
+    "translation": "채널 목록을 나열하는 중 오류가 발생하였습니다."
   },
   {
     "id": "api.command_join.missing.app_error",
@@ -524,6 +708,30 @@
     "translation": "참가한 채널"
   },
   {
+    "id": "api.command_leave.desc",
+    "translation": "Leave the current channel"
+  },
+  {
+    "id": "api.command_leave.fail.app_error",
+    "translation": "채널에 참가하는 중 오류가 발생했습니다."
+  },
+  {
+    "id": "api.command_leave.list.app_error",
+    "translation": "채널 목록을 나열하는 중 오류가 발생하였습니다."
+  },
+  {
+    "id": "api.command_leave.missing.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "api.command_leave.name",
+    "translation": "leave"
+  },
+  {
+    "id": "api.command_leave.success",
+    "translation": "Left the channel."
+  },
+  {
     "id": "api.command_logout.desc",
     "translation": "Mattermost 로그아웃"
   },
@@ -534,10 +742,6 @@
   {
     "id": "api.command_logout.name",
     "translation": "로그아웃"
-  },
-  {
-    "id": "api.command_logout.success_message",
-    "translation": "로그아웃하는 중..."
   },
   {
     "id": "api.command_me.desc",
@@ -557,11 +761,11 @@
   },
   {
     "id": "api.command_msg.dm_fail.app_error",
-    "translation": "메시지를 전송하는 중 오류가 발생했습니다."
+    "translation": "메시지 암호화 중 오류가 발생하였습니다."
   },
   {
     "id": "api.command_msg.fail.app_error",
-    "translation": "사용자에게 메시지를 전달하는 중에 오류가 발생했습니다."
+    "translation": "사용자에게 메시지 전달 중 오류가 발생하였습니다."
   },
   {
     "id": "api.command_msg.hint",
@@ -569,7 +773,7 @@
   },
   {
     "id": "api.command_msg.list.app_error",
-    "translation": "사용자 목록을 표시하는 중 오류가 발생했습니다."
+    "translation": "사용자 제거 중 오류가 발생하였습니다."
   },
   {
     "id": "api.command_msg.missing.app_error",
@@ -608,44 +812,188 @@
     "translation": "이제 온라인 상태입니다."
   },
   {
-    "id": "api.command_shortcuts.browser",
-    "translation": "#### 브라우저 단축키\n\nALT+LEFT: 이전 채널\nALT+RIGHT: 다음 채널\nCTRL+PLUS: 폰트 사이즈 키우기 (zoom in)\nCTRL+MINUS: 폰트 사이즈 줄이기 (zoom out)\n(입력란에서)SHIFT+UP: 이전 줄까지 선택\n(입력란에서)SHIFT+DOWN: 다음 줄 까지 선택\n(입력란에서)SHIFT+ENTER: 줄 바꿈\n"
+    "id": "api.command_open.name",
+    "translation": "열기"
   },
   {
-    "id": "api.command_shortcuts.browser_mac",
-    "translation": "#### 브라우저 단축키\n\nCMD+[: 이전 채널\nCMD+]: 다음 채널\nCMD+PLUS: 폰트 사이즈 키우기 (zoom in)\nCMD+MINUS: 폰트 사이즈 줄이기 (zoom out)\n(입력란에서)SHIFT+UP: 이전 줄까지 선택\n(입력란에서)SHIFT+DOWN: 다음 줄 까지 선택\n(입력란에서)SHIFT+ENTER: 줄 바꿈\n"
+    "id": "api.command_search.desc",
+    "translation": "메세지에서 문장 찾기"
+  },
+  {
+    "id": "api.command_search.hint",
+    "translation": "[text]"
+  },
+  {
+    "id": "api.command_search.name",
+    "translation": "search"
+  },
+  {
+    "id": "api.command_search.unsupported.app_error",
+    "translation": "당신의 기기에서는 검색 명령을 지원하지 않습니다"
+  },
+  {
+    "id": "api.command_settings.desc",
+    "translation": "계정 설정 화면 열기"
+  },
+  {
+    "id": "api.command_settings.name",
+    "translation": "설정"
+  },
+  {
+    "id": "api.command_settings.unsupported.app_error",
+    "translation": "당신의 기기에서는 설정 명령을 지원하지 않습니다"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_next",
+    "translation": "{{.ChannelNextCmd}}: 기록 상의 다음 채널\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_next.cmd",
+    "translation": "ALT+오른쪽 방향키"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_next.cmd_mac",
+    "translation": "CMD+]"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_prev",
+    "translation": "{{.ChannelPrevCmd}}: 기록 상의 이전 채널\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_prev.cmd",
+    "translation": "ALT+왼쪽 방향키"
+  },
+  {
+    "id": "api.command_shortcuts.browser.channel_prev.cmd_mac",
+    "translation": "CMD+["
+  },
+  {
+    "id": "api.command_shortcuts.browser.font_decrease",
+    "translation": "{{.CmdOrCtrl}}+MINUS: 글자 크기 줄이기 (배율 축소)\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.font_increase",
+    "translation": "{{.CmdOrCtrl}}+PLUS: 글자 크기 늘이기 (배율 확대)\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.header",
+    "translation": "#### 브라우저 내장 명령어\n\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.highlight_next",
+    "translation": "(입력 란에서) SHIFT+아래 방향키: 다음 줄까지의 글자를 선택\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.highlight_prev",
+    "translation": "(입력 란에서) SHIFT+위 방향키: 이전 줄까지의 글자를 선택\n"
+  },
+  {
+    "id": "api.command_shortcuts.browser.newline",
+    "translation": "(입력 란에서) SHIFT+ENTER: 줄바꾸기\n"
+  },
+  {
+    "id": "api.command_shortcuts.cmd",
+    "translation": "CMD"
+  },
+  {
+    "id": "api.command_shortcuts.ctrl",
+    "translation": "CTRL"
   },
   {
     "id": "api.command_shortcuts.desc",
     "translation": "단축키 목록을 표시합니다."
   },
   {
-    "id": "api.command_shortcuts.files",
-    "translation": "#### 파일\n\nCTRL+U: 파일 업로드\n\n"
+    "id": "api.command_shortcuts.files.header",
+    "translation": "#### 파일\n\n"
   },
   {
-    "id": "api.command_shortcuts.files_mac",
-    "translation": "#### 파일\n\nCMD+U: 파일 업로드\n\n"
+    "id": "api.command_shortcuts.files.upload",
+    "translation": "{{.CmdOrCtrl}}+U: 파일 업로드 (복수 파일 가능)\n\n"
   },
   {
-    "id": "api.command_shortcuts.msgs",
-    "translation": "#### Messages\n\nALT+[click on a message]: 현재 채널에서 가장 오래 읽지 않은 매세지로 설정합니다. \nESC: 현재 채널의 모든 메세지를 읽은 상태로 표시합니다.\nCTRL+UP (in empty input field): 이전 메세지나 입력한 슬래쉬 명령어를 다시 표시합니다.\nCTRL+DOWN (in empty input field): 다음 메세지나 입력한 슬래쉬 명령을 다시 표시합니다.\nUP (in empty input field): 현재 채널의 당신의 마지막 메세지를 수정합니다.\n@[character]+TAB: [character]로 시작하는 @유저명을 자동완성합니다.\n:[character]+TAB: [character]로 시작하는 emoji를 자동 완성합니다.\n\n"
+    "id": "api.command_shortcuts.header",
+    "translation": "### 키보드 단축키\n\n"
   },
   {
-    "id": "api.command_shortcuts.msgs_mac",
-    "translation": "#### Messages\n\nALT+[click on a message]: 현재 채널에서 가장 오래 읽지 않은 매세지로 설정합니다\nESC: 현재 채널의 모든 메세지를 읽은 상태로 표시합니다\nCMD+UP (in empty input field): 이전 메세지나 입력한 슬래쉬 명령어를 다시 표시합니다.\nCMD+DOWN (in empty input field): 이전 메세지나 입력한 슬래쉬 명령어를 다시 표시합니다.\nUP (in empty input field): 현재 채널의 당신의 마지막 메세지를 수정합니다.\n@[character]+TAB: 현재 채널의 당신의 마지막 메세지를 수정합니다.\n:[character]+TAB: 현재 채널의 당신의 마지막 메세지를 수정합니다.\n\n"
+    "id": "api.command_shortcuts.msgs.comp_channel",
+    "translation": "~[문자]+TAB: [문자]로 시작하는 채널명 자동 완성\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.comp_emoji",
+    "translation": ":[문자]+TAB: [문자]로 시작하는 이모지 자동 완성\n\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.comp_username",
+    "translation": "@[문자]+TAB: [문자]로 시작하는 @사용자명 자동 완성\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.edit",
+    "translation": "위 방향키 (빈 입력란에서): 현재 채널에서 마지막으로 보낸 메시지 수정\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.header",
+    "translation": "#### 메시지\n\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.mark_as_read",
+    "translation": "ESC: 현재 채널의 모든 메시지를 읽음으로 표시\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.reply",
+    "translation": "SHIFT+UP (빈 입력창에서):현재 채널의 가장 마지막 메세지에 대답\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.reprint_next",
+    "translation": "{{.CmdOrCtrl}}+아래 방향키 (빈 입력란에서): 입력한 다음 차례의 메시지 혹은 슬래시 명령어 재입력\n"
+  },
+  {
+    "id": "api.command_shortcuts.msgs.reprint_prev",
+    "translation": "{{.CmdOrCtrl}}+아래 방향키 (빈 입력란에서): 이전에 입력한 메시지 혹은 슬래시 명령어 재입력\n"
   },
   {
     "id": "api.command_shortcuts.name",
     "translation": "단축키"
   },
   {
-    "id": "api.command_shortcuts.nav",
-    "translation": "### 키보드 단축키\n\n#### 탐색\n\nALT+UP: 왼쪽 사이드바의 이전 채널이나 개인 메시지\nALT+DOWN: 왼쪽 사이드바의 다음 채널이나 개인 메시지\nALT+SHIFT+UP: 왼쪽 사이드바의 읽지 않은 이전 채널이나 개인 메시지\nALT+SHIFT+DOWN: 왼쪽 사이드바의 읽지 않은 다음 채널이나 개인 메시지\nCTRL+K: 빠른 채널 변경 창 열기\nCTRL+SHIFT+A: 계정 설정 열기\nCTRL+SHIFT+M: 최근 멘션 열기\n\n"
+    "id": "api.command_shortcuts.nav.direct_messages_menu",
+    "translation": "{{.CmdOrCtrl}}+SHIFT+K: Direct 메세지 메뉴 열기\n"
   },
   {
-    "id": "api.command_shortcuts.nav_mac",
-    "translation": "### 키보드 단축키\n\n#### 탐색\n\nALT+UP: 왼쪽 사이드바의 이전 채널이나 개인 메시지\nALT+DOWN: 왼쪽 사이드바의 다음 채널이나 개인 메시지\nALT+SHIFT+UP: 왼쪽 사이드바의 읽지 않은 이전 채널이나 개인 메시지\nALT+SHIFT+DOWN: 왼쪽 사이드바의 읽지 않은 다음 채널이나 개인 메시지\nCMD+K: 빠른 채널 변경 창 열기\nCMD+SHIFT+A: 계정 설정 열기\nCMD+SHIFT+M: 최근 멘션 열기\n\n"
+    "id": "api.command_shortcuts.nav.header",
+    "translation": "#### 조작법\n\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.next",
+    "translation": "ALT+아래 방향키: 왼쪽 사이드바에서 다음 채널 또는 개인 대화 선택\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.prev",
+    "translation": "ALT+아래 방향키: 왼쪽 사이드바에서 이전 채널 또는 개인 대화 선택\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.recent_mentions",
+    "translation": "{{.CmdOrCtrl}}+SHIFT+M: 최근 멘션 열기\n\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.settings",
+    "translation": "{{.CmdOrCtrl}}+SHIFT+A: 계정 설정 열기\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.switcher",
+    "translation": "{{.CmdOrCtrl}}+K: 빠른 채널 스위처 창 열기\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.switcher_team",
+    "translation": "{{.CmdOrCtrl}}+K: 빠른 채널 스위처 창 열기\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.unread_next",
+    "translation": "ALT+SHIFT+아래 방향키: 왼쪽 사이드바에서 읽지 않은 메시지가 있는 다음 채널 또는 개인 대화 선택\n"
+  },
+  {
+    "id": "api.command_shortcuts.nav.unread_prev",
+    "translation": "ALT+SHIFT+위 방향키: 왼쪽 사이드바에서 읽지 않은 메시지가 있는 이전 채널 또는 개인 대화 선택\n"
   },
   {
     "id": "api.command_shrug.desc",
@@ -660,20 +1008,44 @@
     "translation": "shrug"
   },
   {
+    "id": "api.compliance.init.debug",
+    "translation": "명령어 API 경로 초기화 중"
+  },
+  {
+    "id": "api.config.client.old_format.app_error",
+    "translation": "사용자 설정을 위한 새로운 형식은 아직 지원되지 않습니다. 명령문에서 format=old 를 명시해 주세요."
+  },
+  {
     "id": "api.context.404.app_error",
     "translation": "죄송합니다, 페이지를 찾을 수 없습니다."
+  },
+  {
+    "id": "api.context.invalid_body_param.app_error",
+    "translation": "요청 본문에서 {{.Name}}이(가) 없거나 잘못됨"
   },
   {
     "id": "api.context.invalid_param.app_error",
     "translation": "적절하지 않은 {{.Name}} 파라미터"
   },
   {
+    "id": "api.context.invalid_session.error",
+    "translation": "잘못된 세션 err=%v"
+  },
+  {
     "id": "api.context.invalid_team_url.debug",
-    "translation": "올바르지 않은 상황에서 팀 URL에 접근했습니다. 팀 URL은 API 함수나 팀과 관련이 없는 곳에서 사용되어서는 안 됩니다."
+    "translation": "올바르지 않은 상황에서 팀 URL에 접근했습니다. 팀 URL은 API 함수 또는 팀과 무관한 곳에서 사용되어서는 안 됩니다."
   },
   {
     "id": "api.context.invalid_token.error",
-    "translation": "유효하지않은 세션 토큰=%v, err=%v"
+    "translation": "잘못된 세션 token={{.Token}}, err={{.Error}}"
+  },
+  {
+    "id": "api.context.invalid_url_param.app_error",
+    "translation": "요청 URL에서 {{.Name}} 변수가 없거나 잘못됨"
+  },
+  {
+    "id": "api.context.invalidate_all_caches",
+    "translation": "캐시 전체 삭제 중"
   },
   {
     "id": "api.context.last_activity_at.error",
@@ -682,6 +1054,14 @@
   {
     "id": "api.context.log.error",
     "translation": "%v:%v code=%v rid=%v uid=%v ip=%v %v [details: %v]"
+  },
+  {
+    "id": "api.context.mfa_required.app_error",
+    "translation": "이 서버에는 다단계 인증이 요구됩니다."
+  },
+  {
+    "id": "api.context.missing_teamid.app_error",
+    "translation": "팀 ID 없음"
   },
   {
     "id": "api.context.permissions.app_error",
@@ -702,6 +1082,14 @@
   {
     "id": "api.context.unknown.app_error",
     "translation": "알 수 없는 오류가 발생했습니다. 지원 서비스에 연락하시기 바랍니다."
+  },
+  {
+    "id": "api.context.v3_disabled.app_error",
+    "translation": "API 버전 3은 이 서버에서 비활성화 되어 있습니다. API 버전 4를 이용하십시오. 자세한 내용은 다음을 참고하세요 : https://api.mattermost.com "
+  },
+  {
+    "id": "api.deprecated.init.debug",
+    "translation": "명령어 API 경로 초기화 중"
   },
   {
     "id": "api.email_batching.add_notification_email_to_batch.channel_full.app_error",
@@ -729,11 +1117,19 @@
   },
   {
     "id": "api.email_batching.render_batched_post.direct_message",
-    "translation": "개인 메시지"
+    "translation": "Direct Message from "
   },
   {
     "id": "api.email_batching.render_batched_post.go_to_post",
     "translation": "글로 이동하기"
+  },
+  {
+    "id": "api.email_batching.render_batched_post.group_message",
+    "translation": "Group Message from "
+  },
+  {
+    "id": "api.email_batching.render_batched_post.notification",
+    "translation": "Notification from "
   },
   {
     "id": "api.email_batching.render_batched_post.sender.app_error",
@@ -742,8 +1138,8 @@
   {
     "id": "api.email_batching.send_batched_email_notification.body_text",
     "translation": {
-      "one": "한개의 신규 메시지가 있습니다.",
-      "other": ""
+      "one": "You have a new notification.",
+      "other": "You have {{.Count}} new notifications."
     }
   },
   {
@@ -783,7 +1179,11 @@
   },
   {
     "id": "api.emoji.create.too_large.app_error",
-    "translation": "이모티콘을 생성할 수 없습니다. 이미지 용량은 반드시 64 KB 이하여야 합니다."
+    "translation": "이모티콘을 생성할 수 없습니다. 이미지 용량은 1MB 미만이어야 합니다."
+  },
+  {
+    "id": "api.emoji.delete.delete_reactions.app_error",
+    "translation": "%v 이모티콘을 지우는 중에는 리액션을 삭제할 수 없음"
   },
   {
     "id": "api.emoji.delete.permissions.app_error",
@@ -806,6 +1206,10 @@
     "translation": "이모티콘 API 경로 초기화 중"
   },
   {
+    "id": "api.emoji.init.debug",
+    "translation": "이모티콘 API 경로 초기화 중"
+  },
+  {
     "id": "api.emoji.storage.app_error",
     "translation": "파일 저장소가 제대로 설정되지 않았습니다. S3나 로컬 서버 파일 저장소를 설정해주세요."
   },
@@ -814,8 +1218,24 @@
     "translation": "이모티콘을 만들 수 없습니다. PNG, JPEG, GIF 파일 이어야 합니다."
   },
   {
-    "id": "api.emoji.upload.large_image.app_error",
-    "translation": "이모티콘을 생성할 수 없습니다. 이미지 최대크기는 128px * 128px 입니다."
+    "id": "api.emoji.upload.large_image.decode_error",
+    "translation": "이모티콘을 생성할 수 없습니다. 이미지 디코딩 시도 중 오류가 발생했습니다."
+  },
+  {
+    "id": "api.emoji.upload.large_image.encode_error",
+    "translation": "이모티콘을 생성할 수 없습니다. 이미지 인코딩 시도 중 오류가 발생했습니다."
+  },
+  {
+    "id": "api.emoji.upload.large_image.gif_decode_error",
+    "translation": "이모지를 만들 수 없습니다. GIF 디코딩 중 오류가 발생했습니다."
+  },
+  {
+    "id": "api.emoji.upload.large_image.gif_encode_error",
+    "translation": "이모지를 만들 수 없습니다. GIF 인코딩 중 오류가 발생했습니다."
+  },
+  {
+    "id": "api.file.attachments.disabled.app_error",
+    "translation": "이 서버는 파일 첨부가 비활성화 되어 있습니다."
   },
   {
     "id": "api.file.get_file.public_disabled.app_error",
@@ -826,7 +1246,7 @@
     "translation": "유효하지 않은 링크입니다."
   },
   {
-    "id": "api.file.get_file_preview.no_thumbnail.app_error",
+    "id": "api.file.get_file_preview.no_preview.app_error",
     "translation": "파일 미리보기 이미지가 없습니다."
   },
   {
@@ -982,8 +1402,12 @@
     "translation": "로컬 서버 저장소를 읽는 도중 에러가 발생했습니다."
   },
   {
+    "id": "api.file.upload_file.bad_parse.app_error",
+    "translation": "파일을 업로드 할 수 없습니다. 머릿말 파싱에 실패하였습니다."
+  },
+  {
     "id": "api.file.upload_file.large_image.app_error",
-    "translation": "이미지 파일을 불러올 수 없습니다. 파일이 너무 큽니다."
+    "translation": "File above maximum dimensions could not be uploaded: {{.Filename}}"
   },
   {
     "id": "api.file.upload_file.storage.app_error",
@@ -1014,6 +1438,10 @@
     "translation": "일반 API 경로 초기화 중"
   },
   {
+    "id": "api.import.import_post.attach_files.error",
+    "translation": "Error attaching files to post. postId=%v, fileIds=%v, message=%v"
+  },
+  {
     "id": "api.import.import_post.saving.debug",
     "translation": "글 저장 오류. 사용자=%v, 메시지=%v"
   },
@@ -1032,6 +1460,14 @@
   {
     "id": "api.import.import_user.set_email.error",
     "translation": "확인된 이메일로 설정하는데 실패했습니다. err=%v"
+  },
+  {
+    "id": "api.incoming_webhook.disabled.app_errror",
+    "translation": "Incoming webhook은 관리자가 사용할 수 없게 설정했습니다."
+  },
+  {
+    "id": "api.ldap.init.debug",
+    "translation": "파일 API 경로 초기화 중"
   },
   {
     "id": "api.license.add_license.array.app_error",
@@ -1068,6 +1504,10 @@
   {
     "id": "api.license.add_license.unique_users.app_error",
     "translation": "시스템이 {{.Count}} 유니크 사용자를 가질 때, 이 라이센스는 {{.Users}} 사용자 만을 지원합니다. 유니크 사용자는 이메일 주소 개수로 구분 됩니다. 사용자 수는 사이트 리포트 -> 통계 보기에서 확인할 수 있습니다."
+  },
+  {
+    "id": "api.license.client.old_format.app_error",
+    "translation": "사용자 설정을 위한 새로운 형식은 아직 지원되지 않습니다. 명령문에서 format=old 를 명시해 주세요."
   },
   {
     "id": "api.license.init.debug",
@@ -1182,6 +1622,10 @@
     "translation": "oauth API 경로 초기화 중"
   },
   {
+    "id": "api.oauth.invalid_state_token.app_error",
+    "translation": "Invalid state token"
+  },
+  {
     "id": "api.oauth.regenerate_secret.app_error",
     "translation": "OAuth2 앱의 Secret를 재생성하기에 부적절한 권합니다."
   },
@@ -1212,6 +1656,10 @@
   {
     "id": "api.oauth.singup_with_oauth.invalid_link.app_error",
     "translation": "유효하지 않은 가입 링크입니다."
+  },
+  {
+    "id": "api.opengraph.init.debug",
+    "translation": "Initializing open graph protocol api routes"
   },
   {
     "id": "api.post.check_for_out_of_channel_mentions.message.multiple",
@@ -1266,6 +1714,18 @@
     "translation": "게시글에 대한 파일을 삭제할 때 에러가 발생되었습니다, post_id=%v, err=%v"
   },
   {
+    "id": "api.post.disabled_all",
+    "translation": "@all has been disabled because the channel has more than {{.Users}} users."
+  },
+  {
+    "id": "api.post.disabled_channel",
+    "translation": "@channel has been disabled because the channel has more than {{.Users}} users."
+  },
+  {
+    "id": "api.post.disabled_here",
+    "translation": "@here has been disabled because the channel has more than {{.Users}} users."
+  },
+  {
     "id": "api.post.get_message_for_notification.files_sent",
     "translation": {
       "one": "{{.Count}}개 파일 발송됨: {{.Filenames}}",
@@ -1292,24 +1752,8 @@
     "translation": "작업을 할 수 있는 권한이 없습니다"
   },
   {
-    "id": "api.post.handle_post_events_and_forget.channel.error",
-    "translation": "채널을 찾을 수 없습니다, channel_id=%s, err=%v"
-  },
-  {
     "id": "api.post.handle_post_events_and_forget.members.error",
     "translation": "채널의 참가자를 얻을 수 없습니다, channel_id=%v err=%v"
-  },
-  {
-    "id": "api.post.handle_post_events_and_forget.profiles.error",
-    "translation": "사용자 프로필을 가져올 수 없습니다, team_id=%v, err=%v"
-  },
-  {
-    "id": "api.post.handle_post_events_and_forget.team.error",
-    "translation": "팀을 가져올 수 없습니다, team_id=%s, err=%v"
-  },
-  {
-    "id": "api.post.handle_post_events_and_forget.user.error",
-    "translation": "사용자를 가져올 수 없습니다, user_id=%s, err=%v"
   },
   {
     "id": "api.post.handle_webhook_events_and_forget.create_post.error",
@@ -1320,16 +1764,16 @@
     "translation": "이벤트 POST 실패. err=%s"
   },
   {
-    "id": "api.post.handle_webhook_events_and_forget.getting.error",
-    "translation": "팀의 웹훅을 가져올 수 없습니다. err=%v"
-  },
-  {
     "id": "api.post.init.debug",
     "translation": "post API 경로 초기화 중"
   },
   {
+    "id": "api.post.link_preview_disabled.app_error",
+    "translation": "시스템 관리자가 개인 링크들 저장을 할 수 없도록 했습니다."
+  },
+  {
     "id": "api.post.make_direct_channel_visible.get_2_members.error",
-    "translation": "다이렉트 채널의 두명의 구성원을 가져올 수 없습니다. channel_id=%v"
+    "translation": "다이렉트 채널에 2명의 구성원을 가져올 수 없습니다. channel_id={{.ChannelId}}"
   },
   {
     "id": "api.post.make_direct_channel_visible.get_members.error",
@@ -1344,20 +1788,16 @@
     "translation": "개인 메시지 채널의 속성을 변경하지 못했습니다. user_id=%v other_user_id=%v err=%v"
   },
   {
-    "id": "api.post.notification.here.warn",
-    "translation": "@here (으)로 온라인 사용자에게 알림을 보낼 수 없습니다. err=%v"
-  },
-  {
     "id": "api.post.notification.member_profile.warn",
     "translation": "채널 회원의 프로필 사진을 불러올 수 없습니다. user_id=%v"
   },
   {
-    "id": "api.post.send_notifications_and_forget.clear_push_notification.debug",
-    "translation": "Clearing push notification to %v with channel_id %v"
+    "id": "api.post.send_notifications.user_id.debug",
+    "translation": "Post creator not in channel for the post, no notification sent post_id=%v channel_id=%v user_id=%v"
   },
   {
-    "id": "api.post.send_notifications_and_forget.comment_thread.error",
-    "translation": "Failed to retrieve comment thread posts in notifications root_post_id=%v, err=%v"
+    "id": "api.post.send_notifications_and_forget.clear_push_notification.debug",
+    "translation": "Clearing push notification to %v with channel_id %v"
   },
   {
     "id": "api.post.send_notifications_and_forget.files.error",
@@ -1368,20 +1808,16 @@
     "translation": "Failed to get teams when sending cross-team DM user_id=%v, err=%v"
   },
   {
-    "id": "api.post.send_notifications_and_forget.mention_body",
-    "translation": "신규 메시지가 있습니다."
-  },
-  {
     "id": "api.post.send_notifications_and_forget.mention_subject",
     "translation": "신규 메시지"
   },
   {
-    "id": "api.post.send_notifications_and_forget.message_body",
-    "translation": "한개의 신규 메시지가 있습니다."
+    "id": "api.post.send_notifications_and_forget.push_image_only",
+    "translation": " Uploaded one or more files in "
   },
   {
-    "id": "api.post.send_notifications_and_forget.message_subject",
-    "translation": "신규 메시지"
+    "id": "api.post.send_notifications_and_forget.push_image_only_dm",
+    "translation": " Uploaded one or more files in a direct message"
   },
   {
     "id": "api.post.send_notifications_and_forget.push_in",
@@ -1389,6 +1825,10 @@
   },
   {
     "id": "api.post.send_notifications_and_forget.push_mention",
+    "translation": " mentioned you in "
+  },
+  {
+    "id": "api.post.send_notifications_and_forget.push_mention_no_channel",
     "translation": " mentioned you in "
   },
   {
@@ -1400,28 +1840,16 @@
     "translation": " posted in "
   },
   {
-    "id": "api.post.send_notifications_and_forget.push_notification.debug",
-    "translation": "%v에게 다음 내용으로 푸시 알림 발송 '%v'"
+    "id": "api.post.send_notifications_and_forget.push_non_mention_no_channel",
+    "translation": " posted a message"
   },
   {
     "id": "api.post.send_notifications_and_forget.push_notification.error",
-    "translation": "푸시 알림 발송 실패 device_id=%v, err=%v"
-  },
-  {
-    "id": "api.post.send_notifications_and_forget.send.error",
-    "translation": "발신 실패한 멘션 이메일=%v, err=%v"
+    "translation": "Failed to send push device_id={{.DeviceId}}, err={{.Error}}"
   },
   {
     "id": "api.post.send_notifications_and_forget.sent",
     "translation": "{{.Prefix}} {{.Filenames}} 보냄"
-  },
-  {
-    "id": "api.post.send_notifications_and_forget.sessions.error",
-    "translation": "Failed to retrieve sessions in notifications id=%v, err=%v"
-  },
-  {
-    "id": "api.post.send_notifications_and_forget.user_id.error",
-    "translation": "Post user_id not returned by GetProfiles user_id=%v"
   },
   {
     "id": "api.post.update_mention_count_and_forget.update_error",
@@ -1436,8 +1864,16 @@
     "translation": "작업을 할 수 있는 권한이 없습니다."
   },
   {
+    "id": "api.post.update_post.permissions_denied.app_error",
+    "translation": "새로운 팀을 생성할 수 없습니다. 시스템 관리자에게 문의해보세요."
+  },
+  {
     "id": "api.post.update_post.permissions_details.app_error",
     "translation": "이미 지워짐. ID={{.PostId}}"
+  },
+  {
+    "id": "api.post.update_post.permissions_time_limit.app_error",
+    "translation": "Post edit is only allowed for {{.timeLimit}} seconds. Please ask your systems administrator for details."
   },
   {
     "id": "api.post.update_post.system_message.app_error",
@@ -1468,8 +1904,32 @@
     "translation": "다른 사용자의 기본 설정을 저장할 수 없습니다."
   },
   {
-    "id": "api.preference.save_preferences.set_details.app_error",
-    "translation": "session.user_id={{.SessionUserId}}, preference.user_id={{.PreferenceUserId}}"
+    "id": "api.reaction.delete_reaction.mismatched_channel_id.app_error",
+    "translation": "Failed to delete reaction because channel ID does not match post ID in the URL"
+  },
+  {
+    "id": "api.reaction.init.debug",
+    "translation": "관리자 API 경로 초기화 중"
+  },
+  {
+    "id": "api.reaction.list_reactions.mismatched_channel_id.app_error",
+    "translation": "Failed to get reactions because channel ID does not match post ID in the URL"
+  },
+  {
+    "id": "api.reaction.save_reaction.invalid.app_error",
+    "translation": "Reaction is not valid."
+  },
+  {
+    "id": "api.reaction.save_reaction.mismatched_channel_id.app_error",
+    "translation": "Failed to save reaction because channel ID does not match post ID in the URL"
+  },
+  {
+    "id": "api.reaction.save_reaction.user_id.app_error",
+    "translation": "You cannot save reaction for the other user."
+  },
+  {
+    "id": "api.reaction.send_reaction_event.post.app_error",
+    "translation": "Failed to get post when sending websocket event for reaction"
   },
   {
     "id": "api.saml.save_certificate.app_error",
@@ -1520,68 +1980,84 @@
     "translation": "서버를 정지하는 중..."
   },
   {
+    "id": "api.slackimport.slack_add_bot_user.email_pwd",
+    "translation": "The Integration/Slack Bot user with email {{.Email}} and password {{.Password}} has been imported.\r\n"
+  },
+  {
+    "id": "api.slackimport.slack_add_bot_user.unable_import",
+    "translation": "Unable to import the Integration/Slack Bot user {{.Username}}.\r\n"
+  },
+  {
     "id": "api.slackimport.slack_add_channels.added",
     "translation": "\r\n 채널 추가됨 \r\n"
   },
   {
     "id": "api.slackimport.slack_add_channels.failed_to_add_user",
-    "translation": "채널에 유저 추가시 오류 발생: {{.Username}}\r\n"
+    "translation": "Unable to add Slack user {{.Username}} to channel.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_channels.import_failed",
-    "translation": "추가 시 오류가 발생함: {{.DisplayName}}\r\n"
+    "translation": "Unable to import Slack channel {{.DisplayName}}.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_channels.import_failed.warn",
-    "translation": "Slack Importer: Failed to import channel: %s"
+    "translation": "Slack Import: Unable to import Slack channel: %s."
   },
   {
     "id": "api.slackimport.slack_add_channels.merge",
-    "translation": "기존 채널과 합쳐짐. {{.DisplayName}}\r\n"
+    "translation": "The Slack channel {{.DisplayName}} already exists as an active Mattermost channel. Both channels have been merged.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_posts.attach_files.error",
-    "translation": "게시글에 파일을 첨부하는 동안 에러가 발생되었습니다, post_id=%s, file_ids=%v, err=%v"
+    "translation": "Slack Import: An error occurred when attaching files to a message, post_id=%s, file_ids=%v, err=%v."
   },
   {
     "id": "api.slackimport.slack_add_posts.bot.warn",
-    "translation": "Slack bot posts are not imported yet"
+    "translation": "Slack Import: Slack bot messages cannot be imported yet."
+  },
+  {
+    "id": "api.slackimport.slack_add_posts.bot_user_no_exists.warn",
+    "translation": "Slack Import: Unable to import the bot message as the bot user does not exist."
   },
   {
     "id": "api.slackimport.slack_add_posts.msg_no_comment.debug",
-    "translation": "파일 코멘트가 정의되지 않았습니다."
+    "translation": "Slack Import: Unable to import the message as it has no comments."
   },
   {
     "id": "api.slackimport.slack_add_posts.msg_no_usr.debug",
-    "translation": "작성자 없는 메시지"
+    "translation": "Slack Import: Unable to import the message as the user field is missing."
+  },
+  {
+    "id": "api.slackimport.slack_add_posts.no_bot_id.warn",
+    "translation": "Slack Import: Unable to import bot message as the BotId field is missing."
   },
   {
     "id": "api.slackimport.slack_add_posts.unsupported.warn",
-    "translation": "지원되지 않는 글 형식: %v, %v"
+    "translation": "Slack Import: Unable to import the message as its type is not supported: post_type=%v, post_subtype=%v."
   },
   {
     "id": "api.slackimport.slack_add_posts.upload_file_not_found.warn",
-    "translation": "Slack export의 파일 업로드 메시지를 위한 파일(file id : {{.FileId}})가 없습니다."
+    "translation": "Slack Import: Unable to import file {{.FileId}} as the file is missing from the Slack export zip file."
   },
   {
     "id": "api.slackimport.slack_add_posts.upload_file_not_in_json.warn",
-    "translation": "Cannot import file for upload post with no \"file\" section present in export."
+    "translation": "Slack Import: Unable to attach the file to the post as the latter has no \"file\" section present in Slack export."
   },
   {
     "id": "api.slackimport.slack_add_posts.upload_file_open_failed.warn",
-    "translation": "export archive의 업로드 파일(file id : {{.FileId}})을 열 수 없습니다, error: {{.Error}}"
+    "translation": "Slack Import: Unable to open the file {{.FileId}} from the Slack export: {{.Error}}."
   },
   {
     "id": "api.slackimport.slack_add_posts.upload_file_upload_failed.warn",
-    "translation": "메세지를 업로드하기 위한 파일(ID : {{.FileId}} )을 업로드하는 것을 실패했습니다, error: {{.Error}}"
+    "translation": "Slack Import: An error occurred when uploading file {{.FileId}}: {{.Error}}."
   },
   {
     "id": "api.slackimport.slack_add_posts.user_no_exists.debug",
-    "translation": "사용자 %v 가 존재하지 않습니다!"
+    "translation": "Slack Import: Unable to add the message as the Slack user %v does not exist in Mattermost."
   },
   {
     "id": "api.slackimport.slack_add_posts.without_user.debug",
-    "translation": "작성자 없는 메시지"
+    "translation": "Slack Import: Unable to import the message as the user field is missing."
   },
   {
     "id": "api.slackimport.slack_add_users.created",
@@ -1589,11 +2065,23 @@
   },
   {
     "id": "api.slackimport.slack_add_users.email_pwd",
-    "translation": "이메일, 비밀번호: {{.Email}}, {{.Password}}\r\n"
+    "translation": "Slack user with email {{.Email}} and password {{.Password}} has been imported.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_users.merge_existing",
-    "translation": "기존 사용자 정보와 병합됩니다: {{.Email}}, {{.Username}}\r\n"
+    "translation": "Slack user merged with an existing Mattermost user with matching email {{.Email}} and username {{.Username}}.\r\n"
+  },
+  {
+    "id": "api.slackimport.slack_add_users.merge_existing_failed",
+    "translation": "Slack user merged with an existing Mattermost user with matching email {{.Email}} and username {{.Username}}, but was unable to add the user to their team.\r\n"
+  },
+  {
+    "id": "api.slackimport.slack_add_users.missing_email_address",
+    "translation": "User {{.Username}} does not have an email address in the Slack export. Used {{.Email}} as a placeholder. The user should update their email address once logged in to the system.\r\n"
+  },
+  {
+    "id": "api.slackimport.slack_add_users.missing_email_address.warn",
+    "translation": "Slack Import: User {{.Username}} does not have an email address in the Slack export. Used {{.Email}} as a placeholder. The user should update their email address once logged in to the system."
   },
   {
     "id": "api.slackimport.slack_add_users.unable_import",
@@ -1601,15 +2089,19 @@
   },
   {
     "id": "api.slackimport.slack_convert_channel_mentions.compile_regexp_failed.warn",
-    "translation": "Failed to compile the @mention matching regular expression for Slack user {{.UserID}} {{.Username}}"
+    "translation": "Slack Import: Unable to compile the !channel, matching regular expression for the Slack channel {{.ChannelName}} (id={{.ChannelID}})."
   },
   {
     "id": "api.slackimport.slack_convert_timestamp.bad.warn",
-    "translation": "잘못된 시간 서식이 있습니다."
+    "translation": "Slack Import: Bad timestamp detected."
   },
   {
     "id": "api.slackimport.slack_convert_user_mentions.compile_regexp_failed.warn",
-    "translation": "Failed to compile the @mention matching regular expression for Slack user {{.UserID}} {{.Username}}"
+    "translation": "Slack Import: Unable to compile the @mention, matching regular expression for the Slack user {{.Username}} (id={{.UserID}})."
+  },
+  {
+    "id": "api.slackimport.slack_deactivate_bot_user.failed_to_deactivate",
+    "translation": "Slack Import: Unable to deactivate the user account used for the bot."
   },
   {
     "id": "api.slackimport.slack_import.log",
@@ -1633,7 +2125,7 @@
   },
   {
     "id": "api.slackimport.slack_import.open.app_error",
-    "translation": "파일을 열 수 없습니다. {{.Filename}}"
+    "translation": "Unable to open the file: {{.Filename}}.\r\n"
   },
   {
     "id": "api.slackimport.slack_import.team_fail",
@@ -1641,15 +2133,35 @@
   },
   {
     "id": "api.slackimport.slack_import.zip.app_error",
-    "translation": "Zip 파일을 열 수 없습니다."
+    "translation": "Unable to open the Slack export zip file.\r\n"
   },
   {
     "id": "api.slackimport.slack_parse_channels.error",
-    "translation": "슬랙 채널 파싱 중 오류가 발생했습니다. 가져오기는 계속 진행됩니다."
+    "translation": "Slack Import: Error occurred when parsing some Slack channels. Import may work anyway."
   },
   {
     "id": "api.slackimport.slack_parse_posts.error",
-    "translation": "슬랙 글 파싱 중 오류가 발생했습니다. 가져오기는 계속 진행됩니다."
+    "translation": "Slack Import: Error occurred when parsing some Slack posts. Import may work anyway."
+  },
+  {
+    "id": "api.slackimport.slack_sanitise_channel_properties.display_name_too_long.warn",
+    "translation": "Slack Import: Channel {{.ChannelName}} display name exceeds the maximum length. It will be truncated when imported."
+  },
+  {
+    "id": "api.slackimport.slack_sanitise_channel_properties.header_too_long.warn",
+    "translation": "Slack Import: Channel {{.ChannelName}} header exceeds the maximum length. It will be truncated when imported."
+  },
+  {
+    "id": "api.slackimport.slack_sanitise_channel_properties.name_too_long.warn",
+    "translation": "Slack Import: Channel {{.ChannelName}} handle exceeds the maximum length. It will be truncated when imported."
+  },
+  {
+    "id": "api.slackimport.slack_sanitise_channel_properties.purpose_too_long.warn",
+    "translation": "Slack Import: Channel {{.ChannelName}} purpose exceeds the maximum length. It will be truncated when imported."
+  },
+  {
+    "id": "api.status.init.debug",
+    "translation": "상태 API 루트를 초기화 중"
   },
   {
     "id": "api.status.init.debug",
@@ -1662,6 +2174,18 @@
   {
     "id": "api.status.save_status.error",
     "translation": "Failed to save status for user_id=%v, err=%v"
+  },
+  {
+    "id": "api.status.user_not_found.app_error",
+    "translation": "User not found"
+  },
+  {
+    "id": "api.system.go_routines",
+    "translation": "The number of running goroutines is over the health threshold %v of %v"
+  },
+  {
+    "id": "api.team.add_user_to_team.missing_parameter.app_error",
+    "translation": "Parameter required to add user to team."
   },
   {
     "id": "api.team.create_team.email_disabled.app_error",
@@ -1717,7 +2241,7 @@
   },
   {
     "id": "api.team.import_team.unavailable.app_error",
-    "translation": "유효하지 않은 Filesize"
+    "translation": "Malformed request: filesize field is not present."
   },
   {
     "id": "api.team.init.debug",
@@ -1730,6 +2254,10 @@
   {
     "id": "api.team.invite_members.already.app_error",
     "translation": "이미 팀에 가입되어 있는 사용자입니다."
+  },
+  {
+    "id": "api.team.invite_members.invalid_email.app_error",
+    "translation": "The following email addresses do not belong to an accepted domain: {{.Addresses}}. Please contact your System Administrator for details."
   },
   {
     "id": "api.team.invite_members.member",
@@ -1788,6 +2316,10 @@
     "translation": "작업을 할 수 있는 권한이 없습니다"
   },
   {
+    "id": "api.templates.channel_name.group",
+    "translation": "그룹 메세지"
+  },
+  {
     "id": "api.templates.email_change_body.info",
     "translation": "{{.TeamDisplayName}} 이메일이 {{.NewEmail}}(으)로 변경되었습니다.<br> 잘못 변경된 경우, 시스템 관리자에게 문의하세요."
   },
@@ -1797,7 +2329,7 @@
   },
   {
     "id": "api.templates.email_change_subject",
-    "translation": "{{.TeamDisplayName}} 이메일이 변경되었습니다."
+    "translation": "[{{ .SiteName }}] Your email address has changed"
   },
   {
     "id": "api.templates.email_change_verify_body.button",
@@ -1813,7 +2345,7 @@
   },
   {
     "id": "api.templates.email_change_verify_subject",
-    "translation": "{{.TeamDisplayName}} 새 이메일을 검증하세요."
+    "translation": "[{{ .SiteName }}] Verify new email address"
   },
   {
     "id": "api.templates.email_footer",
@@ -1869,7 +2401,27 @@
   },
   {
     "id": "api.templates.invite_subject",
-    "translation": "{{ .SenderName }} invited you to join {{ .TeamDisplayName }} Team on {{.SiteName}}"
+    "translation": "[{{ .SiteName }}] {{ .SenderName }} invited you to join {{ .TeamDisplayName }} Team"
+  },
+  {
+    "id": "api.templates.mfa_activated_body.info",
+    "translation": "Multi-factor authentication has been added to your account on {{ .SiteURL }}.<br>If this change wasn't initiated by you, please contact your system administrator."
+  },
+  {
+    "id": "api.templates.mfa_activated_body.title",
+    "translation": "Multi-factor authentication was added"
+  },
+  {
+    "id": "api.templates.mfa_change_subject",
+    "translation": "[{{ .SiteName }}] Your MFA has been updated"
+  },
+  {
+    "id": "api.templates.mfa_deactivated_body.info",
+    "translation": "Multi-factor authentication has been removed from your account on {{ .SiteURL }}.<br>If this change wasn't initiated by you, please contact your system administrator."
+  },
+  {
+    "id": "api.templates.mfa_deactivated_body.title",
+    "translation": "Multi-factor authentication was removed"
   },
   {
     "id": "api.templates.password_change_body.info",
@@ -1881,23 +2433,11 @@
   },
   {
     "id": "api.templates.password_change_subject",
-    "translation": "{{.TeamDisplayName}}의 비밀번호가 변경되었습니다. {{.TeamURL}} {{.Method}}"
+    "translation": "[{{ .SiteName }}] Your password has been updated"
   },
   {
     "id": "api.templates.post_body.button",
     "translation": "글로 이동하기"
-  },
-  {
-    "id": "api.templates.post_body.info",
-    "translation": "채널: {{.ChannelName}}<br>{{.SenderName}} - {{.Hour}}:{{.Minute}} {{.TimeZone}}, {{.Month}} {{.Day}}"
-  },
-  {
-    "id": "api.templates.post_subject_in_channel",
-    "translation": "{{.SubjectText}} on {{.TeamDisplayName}} at {{.Month}} {{.Day}}, {{.Year}}"
-  },
-  {
-    "id": "api.templates.post_subject_in_direct_message",
-    "translation": "{{.SubjectText}} on {{.TeamDisplayName}} at {{.Month}} {{.Day}}, {{.Year}}"
   },
   {
     "id": "api.templates.reset_body.button",
@@ -1913,7 +2453,11 @@
   },
   {
     "id": "api.templates.reset_subject",
-    "translation": "비밀번호 재설정"
+    "translation": "[{{ .SiteName }}] Reset your password"
+  },
+  {
+    "id": "api.templates.signin_change_email.body.info",
+    "translation": "You updated your sign-in method for on {{ .SiteName }} to {{.Method}}.<br>If this change wasn't initiated by you, please contact your system administrator."
   },
   {
     "id": "api.templates.signin_change_email.body.method_email",
@@ -1922,6 +2466,10 @@
   {
     "id": "api.templates.signin_change_email.body.title",
     "translation": "You updated your sign-in method"
+  },
+  {
+    "id": "api.templates.signin_change_email.subject",
+    "translation": "[{{ .SiteName }}] Your sign-in method has been updated"
   },
   {
     "id": "api.templates.signup_team_body.button",
@@ -1940,20 +2488,24 @@
     "translation": "{{ .SiteName }} 팀 설정"
   },
   {
-    "id": "api.templates.singin_change_email.body.info",
-    "translation": "You updated your sign-in method for on {{ .SiteName }} to {{.Method}}.<br>If this change wasn't initiated by you, please contact your system administrator."
-  },
-  {
-    "id": "api.templates.singin_change_email.subject",
-    "translation": "You updated your sign-in method on {{ .SiteName }}"
-  },
-  {
     "id": "api.templates.upgrade_30_body.info",
     "translation": "<h3 style='font-weight: normal; margin-top: 10px;'>YOUR DUPLICATE ACCOUNTS HAVE BEEN UPDATED</h3>Your Mattermost server is being upgraded to Version 3.0, which lets you use a single account across multiple teams.<br/><br/>You are receiving this email because the upgrade process has detected your account had the same email or username as other accounts on the server.<br/><br/>The following updates have been made: <br/><br/>{{if .EmailChanged }}- The duplicate email of an account on the `/{{.TeamName}}` team was changed to `{{.Email}}`. You will need to use email and password to login, you can use this new email address for login.<br/><br/>{{end}}{{if .UsernameChanged }}- The duplicate username of an account on the team site `/{{.TeamName}}` has been changed to `{{.Username}}` to avoid confusion with other accounts.<br/><br/>{{end}} RECOMMENDED ACTION: <br/><br/>It is recommended that you login to your teams used by your duplicate accounts and add your primary account to the team and any public channels and private groups which you wish to continue using. <br/><br/>This gives your primary account access to all public channel and private group history. You can continue to access the direct message history of your duplicate accounts by logging in with their credentials. <br/><br/>FOR MORE INFORMATION: <br/><br/>For more information on the upgrade to Mattermost 3.0 please see: <a href='http://www.mattermost.org/upgrading-to-mattermost-3-0/'>http://www.mattermost.org/upgrading-to-mattermost-3-0/</a><br/><br/>"
   },
   {
     "id": "api.templates.upgrade_30_subject.info",
     "translation": "[MATTERMOST] Mattermost 3.0 업그레이드를 위해 계정을 변경하세요."
+  },
+  {
+    "id": "api.templates.user_access_token_body.info",
+    "translation": "A user access token was added to your account on {{ .SiteURL }}. They can be used to access {{.SiteName}} with your account.<br>If this change wasn't initiated by you, please contact your system administrator."
+  },
+  {
+    "id": "api.templates.user_access_token_body.title",
+    "translation": "User access token added to your account"
+  },
+  {
+    "id": "api.templates.user_access_token_subject",
+    "translation": "[{{ .SiteName }}] User access token added to your account"
   },
   {
     "id": "api.templates.username_change_body.info",
@@ -1965,7 +2517,7 @@
   },
   {
     "id": "api.templates.username_change_subject",
-    "translation": "{{.TeamDisplayName}}에서 사용자명이 변경되었습니다."
+    "translation": "[{{ .SiteName }}] Your username has changed"
   },
   {
     "id": "api.templates.verify_body.button",
@@ -2009,7 +2561,7 @@
   },
   {
     "id": "api.templates.welcome_subject",
-    "translation": "You joined {{ .ServerURL }}"
+    "translation": "[{{ .SiteName }}] You joined {{ .ServerURL }}"
   },
   {
     "id": "api.user.activate_mfa.email_and_ldap_only.app_error",
@@ -2017,7 +2569,7 @@
   },
   {
     "id": "api.user.add_direct_channels_and_forget.failed.error",
-    "translation": "사용자의 다이렉트 채널 기본 구성을 실패하였습니다. user_id=%s, team_id=%s, err=%v"
+    "translation": "Failed to add direct channel preferences for user user_id={{.UserId}}, team_id={{.TeamId}}, err={{.Error}}"
   },
   {
     "id": "api.user.authorize_oauth_user.bad_response.app_error",
@@ -2112,8 +2664,20 @@
     "translation": "The email you provided does not belong to an accepted domain. Please contact your administrator or sign up with a different email."
   },
   {
+    "id": "api.user.create_user.disabled.app_error",
+    "translation": "User creation is disabled."
+  },
+  {
     "id": "api.user.create_user.joining.error",
     "translation": "기본 채널에 참여하는데 실패했습니다. user_id=%s, team_id=%s, err=%v"
+  },
+  {
+    "id": "api.user.create_user.missing_hash_or_data.app_error",
+    "translation": "Missing Hash or URL query data."
+  },
+  {
+    "id": "api.user.create_user.missing_invite_id.app_error",
+    "translation": "Missing Invite Id."
   },
   {
     "id": "api.user.create_user.no_open_server",
@@ -2189,7 +2753,7 @@
   },
   {
     "id": "api.user.login.not_provided.app_error",
-    "translation": "Either user id or team name and user email must be provided"
+    "translation": "Must provide either user ID, or team name and user email"
   },
   {
     "id": "api.user.login.not_verified.app_error",
@@ -2269,19 +2833,19 @@
   },
   {
     "id": "api.user.send_email_change_email_and_forget.error",
-    "translation": "이메일 변경 알림 메일을 발송하지 못했습니다. err=%v"
+    "translation": "이메일 변경 알림 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.send_email_change_username_and_forget.error",
-    "translation": "사용자명 변경 알림 메일을 발송하지 못했습니다. err=%v"
+    "translation": "사용자명 변경 알림 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.send_email_change_verify_email_and_forget.error",
-    "translation": "이메일 변경 검증 메일을 발송하지 못했습니다. err=%v"
+    "translation": "이메일 변경 확인 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.send_password_change_email_and_forget.error",
-    "translation": "비밀번호 변경 알림 메일을 발송하지 못했습니다. err=%v"
+    "translation": "비밀번호 변경 알림 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.send_password_reset.find.app_error",
@@ -2297,15 +2861,19 @@
   },
   {
     "id": "api.user.send_sign_in_change_email_and_forget.error",
-    "translation": "비밀번호 변경 알림 메일을 발송하지 못했습니다. err=%v"
+    "translation": "비밀번호 변경 알림 메일을 발송하지 못하였습니다."
+  },
+  {
+    "id": "api.user.send_user_access_token.error",
+    "translation": "Failed to send user access token added email successfully"
   },
   {
     "id": "api.user.send_verify_email_and_forget.failed.error",
-    "translation": "이메일 검증 메일을 발송하지 못했습니다. err=%v"
+    "translation": "이메일 확인 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.send_welcome_email_and_forget.failed.error",
-    "translation": "가입 환경 메일을 발송하지 못했습니다. err=%v"
+    "translation": "가입 환영 메일을 발송하지 못하였습니다."
   },
   {
     "id": "api.user.update_active.no_deactivate_ldap.app_error",
@@ -2318,6 +2886,10 @@
   {
     "id": "api.user.update_mfa.not_available.app_error",
     "translation": "MFA 토큰이 설정되지 않았거나 유효하지 않습니다."
+  },
+  {
+    "id": "api.user.update_oauth_user_attrs.get_user.app_error",
+    "translation": "Could not create user out of {{.Service}} user object"
   },
   {
     "id": "api.user.update_password.context.app_error",
@@ -2373,7 +2945,7 @@
   },
   {
     "id": "api.user.upload_profile_user.decode_config.app_error",
-    "translation": "프로필 이미지 구성을 불러올 수 없습니다."
+    "translation": "Could not save profile image. File does not appear to be a valid image."
   },
   {
     "id": "api.user.upload_profile_user.encode.app_error",
@@ -2440,10 +3012,6 @@
     "translation": "team hub stopping for teamId=%v"
   },
   {
-    "id": "api.webhook.create_incoming.disabled.app_errror",
-    "translation": "Incoming webhook은 관리자가 사용할 수 없게 설정했습니다."
-  },
-  {
     "id": "api.webhook.create_outgoing.disabled.app_error",
     "translation": "Outgoing webhook은 관리자가 사용할 수 없게 설정했습니다."
   },
@@ -2464,11 +3032,11 @@
     "translation": "Either trigger_words or channel_id must be set"
   },
   {
-    "id": "api.webhook.delete_incoming.disabled.app_errror",
+    "id": "api.webhook.delete_incoming.disabled.app_error",
     "translation": "Incoming webhook은 관리자가 사용할 수 없게 설정했습니다."
   },
   {
-    "id": "api.webhook.delete_incoming.permissions.app_errror",
+    "id": "api.webhook.delete_incoming.permissions.app_error",
     "translation": "Incoming webhook을 삭제할 권한이 없습니다"
   },
   {
@@ -2478,14 +3046,6 @@
   {
     "id": "api.webhook.delete_outgoing.permissions.app_error",
     "translation": "Outcoming webhook을 삭제할 권한이 없습니다"
-  },
-  {
-    "id": "api.webhook.get_incoming.disabled.app_error",
-    "translation": "Incoming webhook은 관리자가 사용할 수 없게 설정했습니다."
-  },
-  {
-    "id": "api.webhook.get_outgoing.disabled.app_error",
-    "translation": "Outgoing webhook은 관리자가 사용할 수 없게 설정했습니다."
   },
   {
     "id": "api.webhook.incoming.debug",
@@ -2500,24 +3060,584 @@
     "translation": "webhook API 경로 초기화 중"
   },
   {
-    "id": "api.webhook.regen_outgoing_token.disabled.app_error",
+    "id": "api.webhook.regen_outgoing_token.permissions.app_error",
+    "translation": "Outgoing webhook 토큰을 재생성할 권한이 없습니다"
+  },
+  {
+    "id": "api.webhook.team_mismatch.app_error",
+    "translation": "팀들간의 명령어를 업데이트 할 수 없음"
+  },
+  {
+    "id": "api.webhook.update_incoming.disabled.app_error",
+    "translation": "Incoming webhook은 관리자가 사용할 수 없게 설정했습니다."
+  },
+  {
+    "id": "api.webhook.update_incoming.permissions.app_error",
+    "translation": "Incoming webhook을 삭제할 권한이 없습니다"
+  },
+  {
+    "id": "api.webhook.update_outgoing.disabled.app_error",
     "translation": "Outgoing webhook은 관리자가 사용할 수 없게 설정했습니다."
   },
   {
-    "id": "api.webhook.regen_outgoing_token.permissions.app_error",
-    "translation": "Outgoing webhook 토큰을 재생성할 권한이 없습니다"
+    "id": "api.webhook.update_outgoing.intersect.app_error",
+    "translation": "같은 채널에서 나가는 outgoing webhook들은 동일한 발동 단어/콜백 URL을 가질 수 없습니다."
+  },
+  {
+    "id": "api.webhook.update_outgoing.not_open.app_error",
+    "translation": "Outgoing webhook은 공개 채널에만 생성할 수 있습니다."
+  },
+  {
+    "id": "api.webhook.update_outgoing.permissions.app_error",
+    "translation": "Outgoing webhook을 생성할 권한이 없습니다."
+  },
+  {
+    "id": "api.webhook.update_outgoing.triggers.app_error",
+    "translation": "Either trigger_words or channel_id must be set"
+  },
+  {
+    "id": "api.webrtc.disabled.app_error",
+    "translation": "이 서버에서 WebRTC를 사용할 수 없습니다."
   },
   {
     "id": "api.webrtc.init.debug",
     "translation": "WebRTC API 경로 초기화 중"
   },
   {
-    "id": "api.webrtc.not_available.app_error",
-    "translation": "이 서버에서 WebRTC는 사용할 수 없습니다."
+    "id": "api.webrtc.register_token.app_error",
+    "translation": "WebRTC 토큰 등록 중에 에러가 발생하였습니다."
+  },
+  {
+    "id": "api.websocket.invalid_session.error",
+    "translation": "잘못된 세션 err=%v"
   },
   {
     "id": "api.websocket_handler.invalid_param.app_error",
     "translation": "적절하지 않은 {{.Name}} 파라미터"
+  },
+  {
+    "id": "app.channel.create_channel.no_team_id.app_error",
+    "translation": "Must specify the team ID to create a channel"
+  },
+  {
+    "id": "app.channel.post_update_channel_purpose_message.post.error",
+    "translation": "Failed to post channel purpose message"
+  },
+  {
+    "id": "app.channel.post_update_channel_purpose_message.removed",
+    "translation": "%s이(가) 채널 헤더를 제거했습니다 (이전: %s)"
+  },
+  {
+    "id": "app.channel.post_update_channel_purpose_message.retrieve_user.error",
+    "translation": "업데이트 채널 헤더 메시지 %v을(를) 저장 시도중 사용자를 가져오는데 실패했습니다"
+  },
+  {
+    "id": "app.channel.post_update_channel_purpose_message.updated_from",
+    "translation": "%s 이(가) 채널 헤더를 %s에서 %s(으)로 갱신했습니다"
+  },
+  {
+    "id": "app.channel.post_update_channel_purpose_message.updated_to",
+    "translation": "%s이(가) 채널 헤더를 %s로 갱신했습니다"
+  },
+  {
+    "id": "app.import.bulk_import.file_scan.error",
+    "translation": "Error reading import data file."
+  },
+  {
+    "id": "app.import.bulk_import.json_decode.error",
+    "translation": "JSON decode of line failed."
+  },
+  {
+    "id": "app.import.import_channel.team_not_found.error",
+    "translation": "Error importing channel. Team with name \"{{.TeamName}}\" could not be found."
+  },
+  {
+    "id": "app.import.import_direct_channel.create_direct_channel.error",
+    "translation": "Failed to create direct channel"
+  },
+  {
+    "id": "app.import.import_direct_channel.create_group_channel.error",
+    "translation": "Failed to create group channel"
+  },
+  {
+    "id": "app.import.import_direct_channel.member_not_found.error",
+    "translation": "Could not find channel member when importing direct channel"
+  },
+  {
+    "id": "app.import.import_direct_channel.update_header_failed.error",
+    "translation": "Failed to update direct channel header"
+  },
+  {
+    "id": "app.import.import_direct_post.channel_member_not_found.error",
+    "translation": "Could not find channel member when importing direct channel post"
+  },
+  {
+    "id": "app.import.import_direct_post.create_direct_channel.error",
+    "translation": "Failed to get direct channel"
+  },
+  {
+    "id": "app.import.import_direct_post.create_group_channel.error",
+    "translation": "Failed to get group channel"
+  },
+  {
+    "id": "app.import.import_direct_post.save_preferences.error",
+    "translation": "Error importing direct post. Failed to save preferences."
+  },
+  {
+    "id": "app.import.import_direct_post.user_not_found.error",
+    "translation": "Post user does not exist"
+  },
+  {
+    "id": "app.import.import_line.null_channel.error",
+    "translation": "Import data line has type \"channel\" but the channel object is null."
+  },
+  {
+    "id": "app.import.import_line.null_direct_channel.error",
+    "translation": "Import data line has type \"direct_channel\" but the direct_channel object is null."
+  },
+  {
+    "id": "app.import.import_line.null_direct_post.error",
+    "translation": "Import data line has type \"direct_post\" but the direct_post object is null."
+  },
+  {
+    "id": "app.import.import_line.null_post.error",
+    "translation": "Import data line has type \"post\" but the post object is null."
+  },
+  {
+    "id": "app.import.import_line.null_team.error",
+    "translation": "Import data line has type \"team\" but the team object is null."
+  },
+  {
+    "id": "app.import.import_line.null_user.error",
+    "translation": "Import data line has type \"user\" but the user object is null."
+  },
+  {
+    "id": "app.import.import_line.unknown_line_type.error",
+    "translation": "Import data line has unknown type \"{{.Type}}\"."
+  },
+  {
+    "id": "app.import.import_post.channel_not_found.error",
+    "translation": "Error importing post. Channel with name \"{{.ChannelName}}\" could not be found."
+  },
+  {
+    "id": "app.import.import_post.save_preferences.error",
+    "translation": "Error importing post. Failed to save preferences."
+  },
+  {
+    "id": "app.import.import_post.team_not_found.error",
+    "translation": "Error importing post. Team with name \"{{.TeamName}}\" could not be found."
+  },
+  {
+    "id": "app.import.import_post.user_not_found.error",
+    "translation": "Error importing post. User with username \"{{.Username}}\" could not be found."
+  },
+  {
+    "id": "app.import.import_user_channels.save_preferences.error",
+    "translation": "Error importing user channel memberships. Failed to save preferences."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.create_at_zero.error",
+    "translation": "Channel create_at must not be zero if provided."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.display_name_length.error",
+    "translation": "Channel display_name is not within permitted length constraints."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.display_name_missing.error",
+    "translation": "Missing required channel property: display_name"
+  },
+  {
+    "id": "app.import.validate_channel_import_data.header_length.error",
+    "translation": "Channel header is too long."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.name_characters.error",
+    "translation": "Channel name contains invalid characters."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.name_length.error",
+    "translation": "Channel name is too long."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.name_missing.error",
+    "translation": "Missing required channel property: name"
+  },
+  {
+    "id": "app.import.validate_channel_import_data.purpose_length.error",
+    "translation": "Channel purpose is too long."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.team_missing.error",
+    "translation": "Missing required channel property: team"
+  },
+  {
+    "id": "app.import.validate_channel_import_data.type_invalid.error",
+    "translation": "Channel type is invalid."
+  },
+  {
+    "id": "app.import.validate_channel_import_data.type_missing.error",
+    "translation": "Missing required channel property: type."
+  },
+  {
+    "id": "app.import.validate_direct_channel_import_data.header_length.error",
+    "translation": "Direct channel header is too long"
+  },
+  {
+    "id": "app.import.validate_direct_channel_import_data.members_required.error",
+    "translation": "Missing required direct channel property: members"
+  },
+  {
+    "id": "app.import.validate_direct_channel_import_data.members_too_few.error",
+    "translation": "Direct channel members list contains too few items"
+  },
+  {
+    "id": "app.import.validate_direct_channel_import_data.members_too_many.error",
+    "translation": "Direct channel members list contains too many items"
+  },
+  {
+    "id": "app.import.validate_direct_channel_import_data.unknown_favoriter.error",
+    "translation": "Direct channel can only be favorited by members. \"{{.Username}}\" is not a member."
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.channel_members_required.error",
+    "translation": "Missing required direct post property: channel_members"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.channel_members_too_few.error",
+    "translation": "Direct post channel members list contains too few items"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.channel_members_too_many.error",
+    "translation": "Direct post channel members list contains too many items"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.create_at_missing.error",
+    "translation": "Missing required direct post property: create_at"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.create_at_zero.error",
+    "translation": "CreateAt must be greater than 0"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.message_length.error",
+    "translation": "Message is too long"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.message_missing.error",
+    "translation": "Missing required direct post property: message"
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.unknown_flagger.error",
+    "translation": "Direct post can only be flagged by members of the channel it is in. \"{{.Username}}\" is not a member."
+  },
+  {
+    "id": "app.import.validate_direct_post_import_data.user_missing.error",
+    "translation": "Missing required direct post property: user"
+  },
+  {
+    "id": "app.import.validate_post_import_data.channel_missing.error",
+    "translation": "Missing required Post property: Channel."
+  },
+  {
+    "id": "app.import.validate_post_import_data.create_at_missing.error",
+    "translation": "Missing required Post property: create_at."
+  },
+  {
+    "id": "app.import.validate_post_import_data.create_at_zero.error",
+    "translation": "Post CreateAt property must not be zero if provided."
+  },
+  {
+    "id": "app.import.validate_post_import_data.message_length.error",
+    "translation": "Post Message property is longer than the maximum permitted length."
+  },
+  {
+    "id": "app.import.validate_post_import_data.message_missing.error",
+    "translation": "Missing required Post property: Message."
+  },
+  {
+    "id": "app.import.validate_post_import_data.team_missing.error",
+    "translation": "Missing required Post property: Team."
+  },
+  {
+    "id": "app.import.validate_post_import_data.user_missing.error",
+    "translation": "Missing required Post property: User."
+  },
+  {
+    "id": "app.import.validate_team_import_data.allowed_domains_length.error",
+    "translation": "Team allowed_domains is too long."
+  },
+  {
+    "id": "app.import.validate_team_import_data.create_at_zero.error",
+    "translation": "Team create_at must not be zero if provided."
+  },
+  {
+    "id": "app.import.validate_team_import_data.description_length.error",
+    "translation": "Team description is too long."
+  },
+  {
+    "id": "app.import.validate_team_import_data.display_name_length.error",
+    "translation": "Team display_name is not within permitted length constraints."
+  },
+  {
+    "id": "app.import.validate_team_import_data.display_name_missing.error",
+    "translation": "Missing required team property: display_name."
+  },
+  {
+    "id": "app.import.validate_team_import_data.name_characters.error",
+    "translation": "Team name contains invalid characters."
+  },
+  {
+    "id": "app.import.validate_team_import_data.name_length.error",
+    "translation": "Team name is too long."
+  },
+  {
+    "id": "app.import.validate_team_import_data.name_missing.error",
+    "translation": "Missing required team property: name."
+  },
+  {
+    "id": "app.import.validate_team_import_data.name_reserved.error",
+    "translation": "Team name contains reserved words."
+  },
+  {
+    "id": "app.import.validate_team_import_data.type_invalid.error",
+    "translation": "Team type is not valid."
+  },
+  {
+    "id": "app.import.validate_team_import_data.type_missing.error",
+    "translation": "Missing required team property: type."
+  },
+  {
+    "id": "app.import.validate_user_channels_import_data.channel_name_missing.error",
+    "translation": "Channel name missing from User's Channel Membership."
+  },
+  {
+    "id": "app.import.validate_user_channels_import_data.invalid_notify_props_desktop.error",
+    "translation": "Invalid Desktop NotifyProps for User's Channel Membership."
+  },
+  {
+    "id": "app.import.validate_user_channels_import_data.invalid_notify_props_mark_unread.error",
+    "translation": "Invalid MarkUnread NotifyProps for User's Channel Membership."
+  },
+  {
+    "id": "app.import.validate_user_channels_import_data.invalid_notify_props_mobile.error",
+    "translation": "Invalid Mobile NotifyProps for User's Channel Membership."
+  },
+  {
+    "id": "app.import.validate_user_channels_import_data.invalid_roles.error",
+    "translation": "Invalid roles for User's Channel Membership."
+  },
+  {
+    "id": "app.import.validate_user_import_data.auth_data_and_password.error",
+    "translation": "User AuthData and Password are mutually exclusive."
+  },
+  {
+    "id": "app.import.validate_user_import_data.auth_data_length.error",
+    "translation": "User AuthData is too long."
+  },
+  {
+    "id": "app.import.validate_user_import_data.auth_service_length.error",
+    "translation": "User AuthService should not be empty if it is provided."
+  },
+  {
+    "id": "app.import.validate_user_import_data.email_length.error",
+    "translation": "User email has an invalid length."
+  },
+  {
+    "id": "app.import.validate_user_import_data.email_missing.error",
+    "translation": "Missing required user property: email."
+  },
+  {
+    "id": "app.import.validate_user_import_data.first_name_length.error",
+    "translation": "User First Name is too long."
+  },
+  {
+    "id": "app.import.validate_user_import_data.last_name_length.error",
+    "translation": "User Last Name is too long."
+  },
+  {
+    "id": "app.import.validate_user_import_data.nickname_length.error",
+    "translation": "User nickname is too long."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_channel_trigger_invalid.error",
+    "translation": "Invalid Channel Trigger Notify Prop for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_comment_trigger_invalid.error",
+    "translation": "Invalid Comment Trigger Notify Prop for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_desktop_duration_invalid.error",
+    "translation": "Invalid Desktop Duration Notify Prop value for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_desktop_invalid.error",
+    "translation": "Invalid Desktop Notify Prop value for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_desktop_sound_invalid.error",
+    "translation": "Invalid Desktop Sound Notify Prop value for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_email_invalid.error",
+    "translation": "Invalid Email Notify Prop value for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_mobile_invalid.error",
+    "translation": "Invalid Mobile Notify Prop value for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.notify_props_mobile_push_status_invalid.error",
+    "translation": "Invalid Mobile Push Status Notify Prop for user."
+  },
+  {
+    "id": "app.import.validate_user_import_data.pasword_length.error",
+    "translation": "User Password has invalid length."
+  },
+  {
+    "id": "app.import.validate_user_import_data.position_length.error",
+    "translation": "User Position is too long."
+  },
+  {
+    "id": "app.import.validate_user_import_data.roles_invalid.error",
+    "translation": "User roles are not valid."
+  },
+  {
+    "id": "app.import.validate_user_import_data.username_invalid.error",
+    "translation": "Username is not valid."
+  },
+  {
+    "id": "app.import.validate_user_import_data.username_missing.error",
+    "translation": "Missing require user property: username."
+  },
+  {
+    "id": "app.import.validate_user_teams_import_data.invalid_roles.error",
+    "translation": "Invalid roles for User's Team Membership."
+  },
+  {
+    "id": "app.import.validate_user_teams_import_data.team_name_missing.error",
+    "translation": "Team name missing from User's Team Membership."
+  },
+  {
+    "id": "app.notification.body.intro.direct.full",
+    "translation": "한개의 신규 메시지가 있습니다."
+  },
+  {
+    "id": "app.notification.body.intro.direct.generic",
+    "translation": "You have a new direct message from {{.SenderName}}"
+  },
+  {
+    "id": "app.notification.body.intro.notification.full",
+    "translation": "You have a new notification."
+  },
+  {
+    "id": "app.notification.body.intro.notification.generic",
+    "translation": "You have a new notification from {{.SenderName}}"
+  },
+  {
+    "id": "app.notification.body.text.direct.full",
+    "translation": "{{.Hour}}:{{.Minute}} {{.Timezone}}, {{.Month}} {{.Day}}"
+  },
+  {
+    "id": "app.notification.body.text.direct.generic",
+    "translation": "{{.Hour}}:{{.Minute}} {{.Timezone}}, {{.Month}} {{.Day}}"
+  },
+  {
+    "id": "app.notification.body.text.notification.full",
+    "translation": "채널: {{.ChannelName}}<br>{{.SenderName}} - {{.Hour}}:{{.Minute}} {{.TimeZone}}, {{.Month}} {{.Day}}"
+  },
+  {
+    "id": "app.notification.body.text.notification.generic",
+    "translation": "{{.Hour}}:{{.Minute}} {{.Timezone}}, {{.Month}} {{.Day}}"
+  },
+  {
+    "id": "app.notification.subject.direct.full",
+    "translation": "{{.SubjectText}} on {{.TeamDisplayName}} at {{.Month}} {{.Day}}, {{.Year}}"
+  },
+  {
+    "id": "app.notification.subject.notification.full",
+    "translation": "[{{ .SiteName }}] Notification in {{ .TeamName}} on {{.Month}} {{.Day}}, {{.Year}}"
+  },
+  {
+    "id": "app.user_access_token.disabled",
+    "translation": "Personal access tokens are disabled on this server. Please contact your system administrator for details."
+  },
+  {
+    "id": "app.user_access_token.invalid_or_missing",
+    "translation": "Invalid or missing token"
+  },
+  {
+    "id": "authentication.permissions.create_group_channel.description",
+    "translation": "Ability to create new group message channels"
+  },
+  {
+    "id": "authentication.permissions.create_group_channel.name",
+    "translation": "Create Group Message"
+  },
+  {
+    "id": "authentication.permissions.create_post_public.description",
+    "translation": "Ability to create posts in public channels"
+  },
+  {
+    "id": "authentication.permissions.create_post_public.name",
+    "translation": "Create Posts in Public Channels"
+  },
+  {
+    "id": "authentication.permissions.create_team_roles.description",
+    "translation": "Ability to create new teams"
+  },
+  {
+    "id": "authentication.permissions.create_team_roles.name",
+    "translation": "Create Teams"
+  },
+  {
+    "id": "authentication.permissions.create_user_access_token.description",
+    "translation": "Ability to create personal access tokens"
+  },
+  {
+    "id": "authentication.permissions.create_user_access_token.name",
+    "translation": "Create Personal Access Token"
+  },
+  {
+    "id": "authentication.permissions.manage_jobs.description",
+    "translation": "Ability to manage jobs"
+  },
+  {
+    "id": "authentication.permissions.manage_jobs.name",
+    "translation": "Manage Jobs"
+  },
+  {
+    "id": "authentication.permissions.manage_team_roles.description",
+    "translation": "Ability to change the roles of a team member"
+  },
+  {
+    "id": "authentication.permissions.manage_team_roles.name",
+    "translation": "Manage Team Roles"
+  },
+  {
+    "id": "authentication.permissions.read_public_channel.description",
+    "translation": "Ability to read public channels"
+  },
+  {
+    "id": "authentication.permissions.read_public_channel.name",
+    "translation": "Read Public Channels"
+  },
+  {
+    "id": "authentication.permissions.read_user_access_token.description",
+    "translation": "Ability to read personal access tokens' id, description and user_id fields"
+  },
+  {
+    "id": "authentication.permissions.read_user_access_token.name",
+    "translation": "Read Personal Access Tokens"
+  },
+  {
+    "id": "authentication.permissions.revoke_user_access_token.description",
+    "translation": "Ability to revoke personal access tokens"
+  },
+  {
+    "id": "authentication.permissions.revoke_user_access_token.name",
+    "translation": "Revoke Personal Access Token"
   },
   {
     "id": "authentication.permissions.team_invite_user.description",
@@ -2534,6 +3654,46 @@
   {
     "id": "authentication.permissions.team_use_slash_commands.name",
     "translation": "슬래시 명령어 사용"
+  },
+  {
+    "id": "authentication.roles.system_post_all.description",
+    "translation": "A role with the permission to post in any public, private or direct channel on the system"
+  },
+  {
+    "id": "authentication.roles.system_post_all.name",
+    "translation": "Post in Public, Private and Direct Channels"
+  },
+  {
+    "id": "authentication.roles.system_post_all_public.description",
+    "translation": "A role with the permission to post in any public channel on the system"
+  },
+  {
+    "id": "authentication.roles.system_post_all_public.name",
+    "translation": "Post in Public Channels"
+  },
+  {
+    "id": "authentication.roles.system_user_access_token.description",
+    "translation": "A role with the permissions to create, read and revoke personal access tokens"
+  },
+  {
+    "id": "authentication.roles.system_user_access_token.name",
+    "translation": "Personal Access Token"
+  },
+  {
+    "id": "authentication.roles.team_post_all.description",
+    "translation": "A role with the permission to post in any public or private channel on the team"
+  },
+  {
+    "id": "authentication.roles.team_post_all.name",
+    "translation": "Post in Public and Private Channels"
+  },
+  {
+    "id": "authentication.roles.team_post_all_public.description",
+    "translation": "A role with the permission to post in any public channel on the team"
+  },
+  {
+    "id": "authentication.roles.team_post_all_public.name",
+    "translation": "Post in Public Channels"
   },
   {
     "id": "cli.license.critical",
@@ -2565,7 +3725,7 @@
   },
   {
     "id": "ent.cluster.config_changed.info",
-    "translation": "Cluster configuration has changed for id=%v.  Attempting to restart cluster service.  To ensure the cluster is configured correctly you should not rely on this restart because we detected a core configuration change."
+    "translation": "Cluster configuration has changed for id={{ .id }}.  The cluster may become unstable and a restart is required.  To ensure the cluster is configured correctly you should perform a rolling restart immediately."
   },
   {
     "id": "ent.cluster.debug_fail.debug",
@@ -2597,7 +3757,7 @@
   },
   {
     "id": "ent.cluster.save_config.error",
-    "translation": "System Console is set to read-only when High Availability is enabled."
+    "translation": "System Console is set to read-only when High Availability is enabled  unless ReadOnlyConfig is disabled in the configuration file."
   },
   {
     "id": "ent.cluster.starting.info",
@@ -2628,8 +3788,80 @@
     "translation": "Compliance export started for job '{{.JobName}}' at '{{.FilePath}}'"
   },
   {
+    "id": "ent.elasticsearch.create_client.connect_failed",
+    "translation": "Setting up Elasticsearch Client Failed"
+  },
+  {
+    "id": "ent.elasticsearch.create_index_if_not_exists.index_create_failed",
+    "translation": "Failed to create Elasticsearch index"
+  },
+  {
+    "id": "ent.elasticsearch.create_index_if_not_exists.index_exists_failed",
+    "translation": "Failed to establish whether Elasticsearch index exists"
+  },
+  {
+    "id": "ent.elasticsearch.create_index_if_not_exists.index_mapping_failed",
+    "translation": "Failed to setup Elasticsearch index mapping"
+  },
+  {
+    "id": "ent.elasticsearch.delete_post.error",
+    "translation": "Failed to delete the post"
+  },
+  {
+    "id": "ent.elasticsearch.generic.disabled",
+    "translation": "Elasticsearch search is not enabled on this server"
+  },
+  {
+    "id": "ent.elasticsearch.index_post.error",
+    "translation": "Failed to index the post"
+  },
+  {
+    "id": "ent.elasticsearch.not_started.error",
+    "translation": "Elasticsearch is not started"
+  },
+  {
+    "id": "ent.elasticsearch.purge_indexes.delete_failed",
+    "translation": "Failed to delete Elasticsearch index"
+  },
+  {
+    "id": "ent.elasticsearch.search_posts.disabled",
+    "translation": "Elasticsearch searching is disabled on this server"
+  },
+  {
+    "id": "ent.elasticsearch.search_posts.search_failed",
+    "translation": "Search failed to complete"
+  },
+  {
+    "id": "ent.elasticsearch.search_posts.unmarshall_post_failed",
+    "translation": "Failed to decode search results"
+  },
+  {
+    "id": "ent.elasticsearch.start.index_settings_failed",
+    "translation": "Failed to set Elasticsearch index settings"
+  },
+  {
+    "id": "ent.elasticsearch.test_config.connect_failed",
+    "translation": "Connecting to Elasticsearch server failed."
+  },
+  {
+    "id": "ent.elasticsearch.test_config.indexing_disabled.error",
+    "translation": "Elasticsearch is disabled."
+  },
+  {
+    "id": "ent.elasticsearch.test_config.license.error",
+    "translation": "License does not support Elasticsearch."
+  },
+  {
+    "id": "ent.elasticsearch.test_config.reenter_password",
+    "translation": "The Elasticsearch Server URL or Username has changed. Please re-enter the Elasticsearch password to test connection."
+  },
+  {
     "id": "ent.emoji.licence_disable.app_error",
     "translation": "사용자 정의 이모티콘 제한을 활성화 하려면 엔터프라이즈 라이센스가 필요합니다. 시스템 관리자에게 업그레이드를 문의해보세요."
+  },
+  {
+    "id": "ent.ldap.create_fail",
+    "translation": "Unable to create LDAP user."
   },
   {
     "id": "ent.ldap.disabled.app_error",
@@ -2686,6 +3918,14 @@
   {
     "id": "ent.ldap.validate_filter.app_error",
     "translation": "잘못된 AD/LDAP 필터"
+  },
+  {
+    "id": "ent.metrics.starting.info",
+    "translation": "Metrics and profiling server is listening on %v"
+  },
+  {
+    "id": "ent.metrics.stopping.info",
+    "translation": "Metrics and profiling server is stopping on %v"
   },
   {
     "id": "ent.mfa.activate.authenticate.app_error",
@@ -2804,18 +4044,6 @@
     "translation": "Unable to update existing SAML user. Allowing login anyway. err=%v"
   },
   {
-    "id": "ent.webrtc.disabled.app_error",
-    "translation": "이 서버에서 WebRTC를 사용할 수 없습니다."
-  },
-  {
-    "id": "ent.webrtc.license_disable.app_error",
-    "translation": "당신의 라이센스는 Mattermost의 WebRTC 사용을 지원하지 않습니다."
-  },
-  {
-    "id": "ent.webrtc.register_token.app_error",
-    "translation": "WebRTC 토큰 등록 중에 에러가 발생하였습니다."
-  },
-  {
     "id": "error.generic.link_message",
     "translation": "Mattermost로 돌아가기"
   },
@@ -2840,20 +4068,12 @@
     "translation": "페이지가 없습니다."
   },
   {
-    "id": "leave_team_modal.desc",
-    "translation": "You will be removed from all public channels and private groups.  If the team is private you will not be able to rejoin the team.  Are you sure?"
+    "id": "jobs.request_cancellation.status.error",
+    "translation": "Could not request cancellation for job that is not in a cancelable state."
   },
   {
-    "id": "leave_team_modal.no",
-    "translation": "No"
-  },
-  {
-    "id": "leave_team_modal.title",
-    "translation": "Leave the team?"
-  },
-  {
-    "id": "leave_team_modal.yes",
-    "translation": "Yes"
+    "id": "jobs.set_job_error.update.error",
+    "translation": "Failed to set job status to error"
   },
   {
     "id": "manaultesting.get_channel_id.no_found.debug",
@@ -2905,7 +4125,7 @@
   },
   {
     "id": "mattermost.load_license.find.warn",
-    "translation": "활성화된 라이센스 없음"
+    "translation": "License key from https://mattermost.com required to unlock enterprise features."
   },
   {
     "id": "mattermost.security_bulletin.error",
@@ -2976,6 +4196,10 @@
     "translation": "잘못된 리디렉트 URL"
   },
   {
+    "id": "model.authorize.is_valid.response_type.app_error",
+    "translation": "Invalid response type"
+  },
+  {
     "id": "model.authorize.is_valid.scope.app_error",
     "translation": "잘못된 범위"
   },
@@ -3032,8 +4256,16 @@
     "translation": "Invalid channel id"
   },
   {
+    "id": "model.channel_member.is_valid.email_value.app_error",
+    "translation": "Invalid email notification value"
+  },
+  {
     "id": "model.channel_member.is_valid.notify_level.app_error",
     "translation": "Invalid notify level"
+  },
+  {
+    "id": "model.channel_member.is_valid.push_level.app_error",
+    "translation": "Invalid push notification level"
   },
   {
     "id": "model.channel_member.is_valid.role.app_error",
@@ -3064,8 +4296,52 @@
     "translation": "Unable to write request"
   },
   {
+    "id": "model.client.get_flagged_posts_in_channel.missing_parameter.app_error",
+    "translation": "Missing channel parameter"
+  },
+  {
+    "id": "model.client.get_flagged_posts_in_team.missing_parameter.app_error",
+    "translation": "Missing team parameter"
+  },
+  {
     "id": "model.client.login.app_error",
     "translation": "Authentication tokens didn't match"
+  },
+  {
+    "id": "model.client.read_file.app_error",
+    "translation": "We encountered an error while finding user profiles"
+  },
+  {
+    "id": "model.client.set_profile_user.no_file.app_error",
+    "translation": "요청의 'image' 속성 아래에 파일이 없습니다"
+  },
+  {
+    "id": "model.client.set_profile_user.writer.app_error",
+    "translation": "Unable to write request"
+  },
+  {
+    "id": "model.client.upload_post_attachment.channel_id.app_error",
+    "translation": "Error writing channel id to multipart form"
+  },
+  {
+    "id": "model.client.upload_post_attachment.file.app_error",
+    "translation": "Error writing file to multipart form"
+  },
+  {
+    "id": "model.client.upload_post_attachment.file_size.app_error",
+    "translation": "Error writing fileSize to multipart form"
+  },
+  {
+    "id": "model.client.upload_post_attachment.import_from.app_error",
+    "translation": "Error writing importFrom to multipart form"
+  },
+  {
+    "id": "model.client.upload_post_attachment.writer.app_error",
+    "translation": "Error closing multipart writer"
+  },
+  {
+    "id": "model.client.upload_saml_cert.app_error",
+    "translation": "Error creating SAML certificate multipart form request"
   },
   {
     "id": "model.command.is_valid.create_at.app_error",
@@ -3105,7 +4381,7 @@
   },
   {
     "id": "model.command.is_valid.url.app_error",
-    "translation": "잘못된 URL"
+    "translation": "Invalid URL"
   },
   {
     "id": "model.command.is_valid.url_http.app_error",
@@ -3144,12 +4420,32 @@
     "translation": "Unable to enable email batching when clustering is enabled"
   },
   {
+    "id": "model.config.is_valid.elastic_search.connection_url.app_error",
+    "translation": "Elastic Search ConnectionUrl setting must be provided when Elastic Search indexing is enabled."
+  },
+  {
+    "id": "model.config.is_valid.elastic_search.enable_searching.app_error",
+    "translation": "Elastic Search IndexingEnabled setting must be set to true when Elastic Search SearchEnabled is set to true."
+  },
+  {
+    "id": "model.config.is_valid.elastic_search.password.app_error",
+    "translation": "Elastic Search Password setting must be provided when Elastic Search indexing is enabled."
+  },
+  {
+    "id": "model.config.is_valid.elastic_search.username.app_error",
+    "translation": "Elastic Search Username setting must be provided when Elastic Search indexing is enabled."
+  },
+  {
     "id": "model.config.is_valid.email_batching_buffer_size.app_error",
     "translation": "Invalid email batching buffer size for email settings.  Must be zero or a positive number."
   },
   {
     "id": "model.config.is_valid.email_batching_interval.app_error",
     "translation": "Invalid email batching interval for email settings.  Must be 30 seconds or more."
+  },
+  {
+    "id": "model.config.is_valid.email_notification_contents_type.app_error",
+    "translation": "Invalid email notification contents type for email settings. Must be one of either 'full' or 'generic'."
   },
   {
     "id": "model.config.is_valid.email_reset_salt.app_error",
@@ -3273,7 +4569,11 @@
   },
   {
     "id": "model.config.is_valid.max_file_size.app_error",
-    "translation": "잘못된 파일 최대 용량 설정입니다. 0보다 큰 값이여야 합니다."
+    "translation": "Invalid max file size for file settings. Must be a whole number greater than zero."
+  },
+  {
+    "id": "model.config.is_valid.max_notify_per_channel.app_error",
+    "translation": "팀 설정에 대한 잘못된 팀 당 최대 채널 값입니다. 0보다 큰 값이여야 합니다."
   },
   {
     "id": "model.config.is_valid.max_users.app_error",
@@ -3362,6 +4662,18 @@
   {
     "id": "model.config.is_valid.sql_max_conn.app_error",
     "translation": "Invalid maximum open connection for SQL settings.  Must be a positive number."
+  },
+  {
+    "id": "model.config.is_valid.sql_query_timeout.app_error",
+    "translation": "파일 세팅에 대해 잘못된 프로파일 높이 값입니다. 0보다 큰 값이여야 합니다."
+  },
+  {
+    "id": "model.config.is_valid.teammate_name_display.app_error",
+    "translation": "Invalid teammate display.  Must be 'full_name', 'nickname_full_name' or 'username'"
+  },
+  {
+    "id": "model.config.is_valid.time_between_user_typing.app_error",
+    "translation": "Time between user typing updates should not be set to less than 1000 milliseconds."
   },
   {
     "id": "model.config.is_valid.webrtc_gateway_admin_secret.app_error",
@@ -3454,6 +4766,22 @@
   {
     "id": "model.incoming_hook.user_id.app_error",
     "translation": "잘못된 사용자 ID"
+  },
+  {
+    "id": "model.job.is_valid.create_at.app_error",
+    "translation": "Create at must be a valid time"
+  },
+  {
+    "id": "model.job.is_valid.id.app_error",
+    "translation": "잘못된 형식"
+  },
+  {
+    "id": "model.job.is_valid.status.app_error",
+    "translation": "Invalid job status"
+  },
+  {
+    "id": "model.job.is_valid.type.app_error",
+    "translation": "잘못된 형식"
   },
   {
     "id": "model.oauth.is_valid.app_id.app_error",
@@ -3628,6 +4956,22 @@
     "translation": "Value is too long"
   },
   {
+    "id": "model.reaction.is_valid.create_at.app_error",
+    "translation": "Create at must be a valid time"
+  },
+  {
+    "id": "model.reaction.is_valid.emoji_name.app_error",
+    "translation": "잘못된 이모티콘 ID"
+  },
+  {
+    "id": "model.reaction.is_valid.post_id.app_error",
+    "translation": "잘못된 루트 아이디입니다."
+  },
+  {
+    "id": "model.reaction.is_valid.user_id.app_error",
+    "translation": "잘못된 사용자 ID"
+  },
+  {
     "id": "model.team.is_valid.characters.app_error",
     "translation": "이름은 반드시 2글자 이상의 영문 또는 숫자여야 합니다."
   },
@@ -3638,6 +4982,10 @@
   {
     "id": "model.team.is_valid.create_at.app_error",
     "translation": "Create at must be a valid time"
+  },
+  {
+    "id": "model.team.is_valid.description.app_error",
+    "translation": "잘못된 설명"
   },
   {
     "id": "model.team.is_valid.domains.app_error",
@@ -3677,11 +5025,19 @@
   },
   {
     "id": "model.team_member.is_valid.team_id.app_error",
-    "translation": "잘못된 팀 아이디입니다."
+    "translation": "잘못된 팀 ID"
   },
   {
     "id": "model.team_member.is_valid.user_id.app_error",
     "translation": "잘못된 유저 아이디입니다."
+  },
+  {
+    "id": "model.token.is_valid.expiry",
+    "translation": "Invalid token expiry"
+  },
+  {
+    "id": "model.token.is_valid.size",
+    "translation": "잘못된 토큰"
   },
   {
     "id": "model.user.is_valid.auth_data.app_error",
@@ -3718,6 +5074,14 @@
   {
     "id": "model.user.is_valid.nickname.app_error",
     "translation": "잘못된 닉네임입니다."
+  },
+  {
+    "id": "model.user.is_valid.password_limit.app_error",
+    "translation": "Unable to set a password over 72 characters due to the limitations of bcrypt."
+  },
+  {
+    "id": "model.user.is_valid.position.app_error",
+    "translation": "Invalid position: must not be longer than 35 characters."
   },
   {
     "id": "model.user.is_valid.pwd.app_error",
@@ -3785,7 +5149,7 @@
   },
   {
     "id": "model.user.is_valid.team_id.app_error",
-    "translation": "잘못된 팀 아이디입니다."
+    "translation": "잘못된 팀 ID"
   },
   {
     "id": "model.user.is_valid.update_at.app_error",
@@ -3794,6 +5158,18 @@
   {
     "id": "model.user.is_valid.username.app_error",
     "translation": "잘못된 유저이름입니다."
+  },
+  {
+    "id": "model.user_access_token.is_valid.description.app_error",
+    "translation": "Invalid description, must be 255 or less characters"
+  },
+  {
+    "id": "model.user_access_token.is_valid.token.app_error",
+    "translation": "잘못된 접근 토큰입니다."
+  },
+  {
+    "id": "model.user_access_token.is_valid.user_id.app_error",
+    "translation": "잘못된 사용자 ID"
   },
   {
     "id": "model.utils.decode_json.app_error",
@@ -3864,10 +5240,6 @@
     "translation": "Failed to create dialect specific driver %v"
   },
   {
-    "id": "store.sql.drop_column.critical",
-    "translation": "Failed to drop column %v"
-  },
-  {
     "id": "store.sql.incorrect_mac",
     "translation": "Incorrect MAC for the given ciphertext"
   },
@@ -3882,14 +5254,6 @@
   {
     "id": "store.sql.open_conn.panic",
     "translation": "Failed to open sql connection %v"
-  },
-  {
-    "id": "store.sql.ping.critical",
-    "translation": "Failed to ping db err:%v"
-  },
-  {
-    "id": "store.sql.pinging.info",
-    "translation": "Pinging sql %v database"
   },
   {
     "id": "store.sql.read_replicas_not_licensed.critical",
@@ -3917,7 +5281,7 @@
   },
   {
     "id": "store.sql.schema_version.critical",
-    "translation": "The database schema version of %v cannot be upgraded.  You must not skip a version."
+    "translation": "Database schema version %v is no longer supported. This Mattermost server supports automatic upgrades from schema version %v through schema version %v. Downgrades are not supported. Please manually upgrade to at least version %v before continuing"
   },
   {
     "id": "store.sql.short_ciphertext",
@@ -3954,6 +5318,10 @@
   {
     "id": "store.sql_audit.save.saving.app_error",
     "translation": "We encountered an error saving the audit"
+  },
+  {
+    "id": "store.sql_channel.analytics_deleted_type_count.app_error",
+    "translation": "채널을 찾을 수 없습니다"
   },
   {
     "id": "store.sql_channel.analytics_type_count.app_error",
@@ -4012,6 +5380,22 @@
     "translation": "No channels were found"
   },
   {
+    "id": "store.sql_channel.get_channels_by_ids.get.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_channel.get_channels_by_ids.not_found.app_error",
+    "translation": "No channel found"
+  },
+  {
+    "id": "store.sql_channel.get_deleted_by_name.existing.app_error",
+    "translation": "존재하는 채널을 찾지 못했습니다."
+  },
+  {
+    "id": "store.sql_channel.get_deleted_by_name.missing.app_error",
+    "translation": "No deleted channel exists with that name"
+  },
+  {
     "id": "store.sql_channel.get_extra_members.app_error",
     "translation": "We couldn't get the extra info for channel members"
   },
@@ -4040,12 +5424,28 @@
     "translation": "채널을 찾을 수 없습니다"
   },
   {
+    "id": "store.sql_channel.get_members_by_ids.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
     "id": "store.sql_channel.get_more_channels.get.app_error",
     "translation": "채널을 찾을 수 없습니다"
   },
   {
+    "id": "store.sql_channel.get_public_channels.get.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_channel.get_unread.app_error",
+    "translation": "We couldn't get the channel unread messages"
+  },
+  {
     "id": "store.sql_channel.increment_mention_count.app_error",
     "translation": "We couldn't increment the mention count"
+  },
+  {
+    "id": "store.sql_channel.permanent_delete.app_error",
+    "translation": "채널을 삭제하지 못했습니다."
   },
   {
     "id": "store.sql_channel.permanent_delete_by_team.app_error",
@@ -4054,6 +5454,10 @@
   {
     "id": "store.sql_channel.permanent_delete_members_by_user.app_error",
     "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_channel.pinned_posts.app_error",
+    "translation": "We couldn't find the pinned posts"
   },
   {
     "id": "store.sql_channel.remove_member.app_error",
@@ -4081,7 +5485,7 @@
   },
   {
     "id": "store.sql_channel.save_channel.exists.app_error",
-    "translation": "A channel with that URL already exists"
+    "translation": "A channel with that name already exists on the same team"
   },
   {
     "id": "store.sql_channel.save_channel.limit.app_error",
@@ -4126,6 +5530,10 @@
   {
     "id": "store.sql_channel.save_member.save.app_error",
     "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_channel.search.app_error",
+    "translation": "We encountered an error updating the channel"
   },
   {
     "id": "store.sql_channel.set_last_viewed_at.app_error",
@@ -4242,6 +5650,30 @@
   {
     "id": "store.sql_file_info.save.app_error",
     "translation": "We couldn't save the file info"
+  },
+  {
+    "id": "store.sql_file_info.save_or_update.app_error",
+    "translation": "We couldn't save or update the file info"
+  },
+  {
+    "id": "store.sql_job.delete.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_job.get.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_job.get_all.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_job.save.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_job.update.app_error",
+    "translation": "채널을 찾을 수 없습니다"
   },
   {
     "id": "store.sql_license.get.app_error",
@@ -4392,6 +5824,18 @@
     "translation": "We couldn't get the parent posts for the channel"
   },
   {
+    "id": "store.sql_post.get_posts_batch_for_indexing.get.app_error",
+    "translation": "We couldn't get the posts batch for indexing"
+  },
+  {
+    "id": "store.sql_post.get_posts_by_ids.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_post.get_posts_created_att.app_error",
+    "translation": "We couldn't get the posts for the channel"
+  },
+  {
     "id": "store.sql_post.get_posts_since.app_error",
     "translation": "We couldn't get the posts for the channel"
   },
@@ -4400,12 +5844,20 @@
     "translation": "We couldn't get the posts for the channel"
   },
   {
+    "id": "store.sql_post.overwrite.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
     "id": "store.sql_post.permanent_delete.app_error",
     "translation": "채널을 찾을 수 없습니다"
   },
   {
     "id": "store.sql_post.permanent_delete_all_comments_by_user.app_error",
     "translation": "We couldn't delete the comments for user"
+  },
+  {
+    "id": "store.sql_post.permanent_delete_by_channel.app_error",
+    "translation": "채널을 삭제하지 못했습니다."
   },
   {
     "id": "store.sql_post.permanent_delete_by_user.app_error",
@@ -4424,8 +5876,12 @@
     "translation": "You cannot update an existing Post"
   },
   {
-    "id": "store.sql_post.search.app_error",
-    "translation": "We encountered an error while searching for posts"
+    "id": "store.sql_post.search.disabled",
+    "translation": "Searching has been disabled on this server. Please contact your System Administrator."
+  },
+  {
+    "id": "store.sql_post.search.warn",
+    "translation": "Query error searching posts: %v"
   },
   {
     "id": "store.sql_post.update.app_error",
@@ -4490,6 +5946,46 @@
   {
     "id": "store.sql_preference.update.app_error",
     "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_reaction.delete.begin.app_error",
+    "translation": "Unable to open transaction while deleting reaction"
+  },
+  {
+    "id": "store.sql_reaction.delete.commit.app_error",
+    "translation": "Unable to commit transaction while deleting reaction"
+  },
+  {
+    "id": "store.sql_reaction.delete.save.app_error",
+    "translation": "Unable to delete reaction"
+  },
+  {
+    "id": "store.sql_reaction.delete_all_with_emoj_name.delete_reactions.app_error",
+    "translation": "Unable to delete reactions with the given emoji name"
+  },
+  {
+    "id": "store.sql_reaction.delete_all_with_emoj_name.get_reactions.app_error",
+    "translation": "Unable to get reactions with the given emoji name"
+  },
+  {
+    "id": "store.sql_reaction.delete_all_with_emoji_name.update_post.warn",
+    "translation": "Unable to update Post.HasReactions while removing reactions post_id=%v, error=%v"
+  },
+  {
+    "id": "store.sql_reaction.get_for_post.app_error",
+    "translation": "Unable to get reactions for post"
+  },
+  {
+    "id": "store.sql_reaction.save.begin.app_error",
+    "translation": "Unable to open transaction while saving reaction"
+  },
+  {
+    "id": "store.sql_reaction.save.commit.app_error",
+    "translation": "Unable to commit transaction while saving reaction"
+  },
+  {
+    "id": "store.sql_reaction.save.save.app_error",
+    "translation": "Unable to save reaction"
   },
   {
     "id": "store.sql_session.analytics_session_count.app_error",
@@ -4660,6 +6156,10 @@
     "translation": "We encountered a problem when looking up teams"
   },
   {
+    "id": "store.sql_team.get_unread.app_error",
+    "translation": "We couldn't get the teams unread messages"
+  },
+  {
     "id": "store.sql_team.permanent_delete.app_error",
     "translation": "채널을 찾을 수 없습니다"
   },
@@ -4688,6 +6188,14 @@
     "translation": "채널을 찾을 수 없습니다"
   },
   {
+    "id": "store.sql_team.search_all_team.app_error",
+    "translation": "We encountered an error updating the channel"
+  },
+  {
+    "id": "store.sql_team.search_open_team.app_error",
+    "translation": "We encountered an error updating the channel"
+  },
+  {
     "id": "store.sql_team.update.app_error",
     "translation": "채널을 찾을 수 없습니다"
   },
@@ -4706,6 +6214,14 @@
   {
     "id": "store.sql_team.update_display_name.app_error",
     "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user.analytics_get_inactive_users_count.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user.analytics_get_system_admin_count.app_error",
+    "translation": "We couldn't get the system admin count"
   },
   {
     "id": "store.sql_user.analytics_unique_user_count.app_error",
@@ -4740,12 +6256,16 @@
     "translation": "We found multiple users matching your credentials and were unable to log you in. Please contact an administrator."
   },
   {
+    "id": "store.sql_user.get_new_users.app_error",
+    "translation": "We encountered an error while finding preferences"
+  },
+  {
     "id": "store.sql_user.get_profiles.app_error",
     "translation": "We encountered an error while finding user profiles"
   },
   {
     "id": "store.sql_user.get_recently_active_users.app_error",
-    "translation": "We encountered an error while finding the recently active users"
+    "translation": "We encountered an error while finding preferences"
   },
   {
     "id": "store.sql_user.get_sysadmin_profiles.app_error",
@@ -4769,7 +6289,7 @@
   },
   {
     "id": "store.sql_user.missing_account.const",
-    "translation": "We couldn't find an existing account matching your email address for this team. This team may require an invite from the team owner to join."
+    "translation": "사용자를 찾을 수 없습니다"
   },
   {
     "id": "store.sql_user.permanent_delete.app_error",
@@ -4884,6 +6404,26 @@
     "translation": "Unable to update verify email field"
   },
   {
+    "id": "store.sql_user_access_token.delete.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user_access_token.get.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user_access_token.get_by_token.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user_access_token.get_by_user.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
+    "id": "store.sql_user_access_token.save.app_error",
+    "translation": "채널을 찾을 수 없습니다"
+  },
+  {
     "id": "store.sql_webhooks.analytics_incoming_count.app_error",
     "translation": "Incoming webhook 갯수를 셀 수 없었습니다"
   },
@@ -4924,7 +6464,15 @@
     "translation": "Webhook들을 찾는 데 실패했습니다"
   },
   {
+    "id": "store.sql_webhooks.permanent_delete_incoming_by_channel.app_error",
+    "translation": "Webhook을 삭제하는 데 실패했습니다"
+  },
+  {
     "id": "store.sql_webhooks.permanent_delete_incoming_by_user.app_error",
+    "translation": "Webhook을 삭제하는 데 실패했습니다"
+  },
+  {
+    "id": "store.sql_webhooks.permanent_delete_outgoing_by_channel.app_error",
     "translation": "Webhook을 삭제하는 데 실패했습니다"
   },
   {
@@ -4948,12 +6496,20 @@
     "translation": "기존에 있는 OutgoingWebhook을 덮어쓸 수 없습니다"
   },
   {
+    "id": "store.sql_webhooks.update_incoming.app_error",
+    "translation": "IncomingWebhook을 저장하는 데 실패했습니다"
+  },
+  {
     "id": "store.sql_webhooks.update_outgoing.app_error",
     "translation": "Webhook을 갱신하는 데 실패했습니다"
   },
   {
     "id": "system.message.name",
     "translation": "시스템"
+  },
+  {
+    "id": "utils.config.add_client_locale.app_error",
+    "translation": "Unable to load mattermost configuration file:  Adding DefaultClientLocale to AvailableLocales."
   },
   {
     "id": "utils.config.load_config.decoding.panic",
@@ -4974,6 +6530,22 @@
   {
     "id": "utils.config.save_config.saving.app_error",
     "translation": "An error occurred while saving the file to {{.Filename}}"
+  },
+  {
+    "id": "utils.config.supported_available_locales.app_error",
+    "translation": "Unable to load mattermost configuration file:  AvailableLocales must include DefaultClientLocale. Setting AvailableLocales to all locales as default value."
+  },
+  {
+    "id": "utils.config.supported_client_locale.app_error",
+    "translation": "Unable to load mattermost configuration file:  DefaultClientLocale must be one of the supported locales. Setting DefaultClientLocale to en as default value."
+  },
+  {
+    "id": "utils.config.supported_server_locale.app_error",
+    "translation": "Unable to load mattermost configuration file:  DefaultServerLocale must be one of the supported locales"
+  },
+  {
+    "id": "utils.config.validate_locale.app_error",
+    "translation": "Unable to load mattermost configuration file:  AvailableLocales must include DefaultClientLocale"
   },
   {
     "id": "utils.diagnostic.analytics_not_found.app_error",
@@ -5012,6 +6584,10 @@
     "translation": "Encountered error signing license, err=%v"
   },
   {
+    "id": "utils.mail.connect_smtp.helo.app_error",
+    "translation": "Failed to set HELO"
+  },
+  {
     "id": "utils.mail.connect_smtp.open.app_error",
     "translation": "Failed to open connection"
   },
@@ -5024,6 +6600,10 @@
     "translation": "Failed to authenticate on SMTP server"
   },
   {
+    "id": "utils.mail.new_client.helo.error",
+    "translation": "Failed to to set the HELO to SMTP server %v"
+  },
+  {
     "id": "utils.mail.new_client.open.error",
     "translation": "Failed to open a connection to SMTP server %v"
   },
@@ -5033,7 +6613,7 @@
   },
   {
     "id": "utils.mail.send_mail.from_address.app_error",
-    "translation": "Failed to add from email address"
+    "translation": "Notification From Address setting is missing or invalid."
   },
   {
     "id": "utils.mail.send_mail.msg.app_error",
@@ -5049,7 +6629,7 @@
   },
   {
     "id": "utils.mail.send_mail.to_address.app_error",
-    "translation": "Failed to add to email address"
+    "translation": "Notification To Address setting is missing or invalid."
   },
   {
     "id": "utils.mail.test.configured.error",
@@ -5112,6 +6692,10 @@
     "translation": "돌아가기"
   },
   {
+    "id": "web.incoming_webhook.attachment.app_error",
+    "translation": "Maximum attachments length is {{.Max}} characters, received size is {{.Actual}}"
+  },
+  {
     "id": "web.incoming_webhook.channel.app_error",
     "translation": "채널을 찾을 수 없습니다"
   },
@@ -5134,6 +6718,10 @@
   {
     "id": "web.incoming_webhook.text.app_error",
     "translation": "지정된 텍스트가 없습니다."
+  },
+  {
+    "id": "web.incoming_webhook.text.length.app_error",
+    "translation": "Maximum text length is {{.Max}} characters, received size is {{.Actual}}"
   },
   {
     "id": "web.incoming_webhook.user.app_error",
@@ -5226,5 +6814,21 @@
   {
     "id": "web.watcher_fail.error",
     "translation": "Failed to add directory to watcher %v"
+  },
+  {
+    "id": "wsapi.status.init.debug",
+    "translation": "상태 API 루트를 초기화 중"
+  },
+  {
+    "id": "wsapi.system.init.debug",
+    "translation": "웹소켓 API 경로 초기화 중"
+  },
+  {
+    "id": "wsapi.user.init.debug",
+    "translation": "웹소켓 API 경로 초기화 중"
+  },
+  {
+    "id": "wsapi.webrtc.init.debug",
+    "translation": "웹소켓 API 경로 초기화 중"
   }
 ]
