@@ -7,8 +7,10 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -20,6 +22,7 @@ import (
 
 	"github.com/mattermost/platform/einterfaces"
 	"github.com/mattermost/platform/model"
+	"net/http"
 )
 
 const (
@@ -168,7 +171,7 @@ func GetLogFileLocation(fileLocation string) string {
 		logDir, _ := FindDir("logs")
 		return logDir + LOG_FILENAME
 	} else {
-		return fileLocation + LOG_FILENAME
+		return path.Join(fileLocation, LOG_FILENAME)
 	}
 }
 
@@ -178,14 +181,14 @@ func SaveConfig(fileName string, config *model.Config) *model.AppError {
 
 	b, err := json.MarshalIndent(config, "", "    ")
 	if err != nil {
-		return model.NewLocAppError("SaveConfig", "utils.config.save_config.saving.app_error",
-			map[string]interface{}{"Filename": fileName}, err.Error())
+		return model.NewAppError("SaveConfig", "utils.config.save_config.saving.app_error",
+			map[string]interface{}{"Filename": fileName}, err.Error(), http.StatusBadRequest)
 	}
 
 	err = ioutil.WriteFile(fileName, b, 0644)
 	if err != nil {
-		return model.NewLocAppError("SaveConfig", "utils.config.save_config.saving.app_error",
-			map[string]interface{}{"Filename": fileName}, err.Error())
+		return model.NewAppError("SaveConfig", "utils.config.save_config.saving.app_error",
+			map[string]interface{}{"Filename": fileName}, err.Error(), http.StatusInternalServerError)
 	}
 
 	return nil
@@ -308,6 +311,22 @@ func LoadConfig(fileName string) {
 	viper.AddConfigPath(".")
 
 	configReadErr := viper.ReadInConfig()
+	if configReadErr != nil {
+		if _, ok := configReadErr.(viper.ConfigFileNotFoundError); ok {
+			// In case of a file-not-found error, try to copy default.json if it's present.
+			defaultPath := FindConfigFile("default.json")
+			if src, err := os.Open(defaultPath); err == nil {
+				if dest, err := os.OpenFile(filepath.Join(filepath.Dir(defaultPath), "config.json"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600); err == nil {
+					if _, err := io.Copy(dest, src); err == nil {
+						configReadErr = viper.ReadInConfig()
+					}
+					dest.Close()
+				}
+				src.Close()
+			}
+		}
+	}
+
 	if configReadErr != nil {
 		errMsg := T("utils.config.load_config.opening.panic", map[string]interface{}{"Filename": fileName, "Error": configReadErr.Error()})
 		fmt.Fprintln(os.Stderr, errMsg)
@@ -453,9 +472,6 @@ func getClientConfig(c *model.Config) map[string]string {
 	props["AboutLink"] = *c.SupportSettings.AboutLink
 	props["HelpLink"] = *c.SupportSettings.HelpLink
 	props["ReportAProblemLink"] = *c.SupportSettings.ReportAProblemLink
-	props["AdministratorsGuideLink"] = *c.SupportSettings.AdministratorsGuideLink
-	props["TroubleshootingForumLink"] = *c.SupportSettings.TroubleshootingForumLink
-	props["CommercialSupportLink"] = *c.SupportSettings.CommercialSupportLink
 	props["SupportEmail"] = *c.SupportSettings.SupportEmail
 
 	props["EnableFileAttachments"] = strconv.FormatBool(*c.FileSettings.EnableFileAttachments)
@@ -489,7 +505,10 @@ func getClientConfig(c *model.Config) map[string]string {
 	props["DiagnosticId"] = CfgDiagnosticId
 	props["DiagnosticsEnabled"] = strconv.FormatBool(*c.LogSettings.EnableDiagnostics)
 
-	if IsLicensed {
+	if IsLicensed() {
+
+		License := License()
+
 		if *License.Features.CustomBrand {
 			props["EnableCustomBrand"] = strconv.FormatBool(*c.TeamSettings.EnableCustomBrand)
 			props["CustomBrandText"] = *c.TeamSettings.CustomBrandText
@@ -572,12 +591,12 @@ func ValidateLocales(cfg *model.Config) *model.AppError {
 	locales := GetSupportedLocales()
 	if _, ok := locales[*cfg.LocalizationSettings.DefaultServerLocale]; !ok {
 		*cfg.LocalizationSettings.DefaultServerLocale = model.DEFAULT_LOCALE
-		err = model.NewLocAppError("ValidateLocales", "utils.config.supported_server_locale.app_error", nil, "")
+		err = model.NewAppError("ValidateLocales", "utils.config.supported_server_locale.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if _, ok := locales[*cfg.LocalizationSettings.DefaultClientLocale]; !ok {
 		*cfg.LocalizationSettings.DefaultClientLocale = model.DEFAULT_LOCALE
-		err = model.NewLocAppError("ValidateLocales", "utils.config.supported_client_locale.app_error", nil, "")
+		err = model.NewAppError("ValidateLocales", "utils.config.supported_client_locale.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if len(*cfg.LocalizationSettings.AvailableLocales) > 0 {
@@ -586,7 +605,7 @@ func ValidateLocales(cfg *model.Config) *model.AppError {
 			if _, ok := locales[word]; !ok {
 				*cfg.LocalizationSettings.AvailableLocales = ""
 				isDefaultClientLocaleInAvailableLocales = true
-				err = model.NewLocAppError("ValidateLocales", "utils.config.supported_available_locales.app_error", nil, "")
+				err = model.NewAppError("ValidateLocales", "utils.config.supported_available_locales.app_error", nil, "", http.StatusBadRequest)
 				break
 			}
 
@@ -599,7 +618,7 @@ func ValidateLocales(cfg *model.Config) *model.AppError {
 
 		if !isDefaultClientLocaleInAvailableLocales {
 			availableLocales += "," + *cfg.LocalizationSettings.DefaultClientLocale
-			err = model.NewLocAppError("ValidateLocales", "utils.config.add_client_locale.app_error", nil, "")
+			err = model.NewAppError("ValidateLocales", "utils.config.add_client_locale.app_error", nil, "", http.StatusBadRequest)
 		}
 
 		*cfg.LocalizationSettings.AvailableLocales = strings.Join(RemoveDuplicatesFromStringArray(strings.Split(availableLocales, ",")), ",")
@@ -648,5 +667,13 @@ func Desanitize(cfg *model.Config) {
 
 	for i := range cfg.SqlSettings.DataSourceSearchReplicas {
 		cfg.SqlSettings.DataSourceSearchReplicas[i] = Cfg.SqlSettings.DataSourceSearchReplicas[i]
+	}
+}
+
+func IsLeader() bool {
+	if IsLicensed() && *Cfg.ClusterSettings.Enable && einterfaces.GetClusterInterface() != nil {
+		return einterfaces.GetClusterInterface().IsLeader()
+	} else {
+		return true
 	}
 }

@@ -25,7 +25,7 @@ import (
 	"github.com/nicksnyder/go-i18n/i18n"
 )
 
-func SendNotifications(post *model.Post, team *model.Team, channel *model.Channel, sender *model.User) ([]string, *model.AppError) {
+func SendNotifications(post *model.Post, team *model.Team, channel *model.Channel, sender *model.User, parentPostList *model.PostList) ([]string, *model.AppError) {
 	pchan := Srv.Store.User().GetAllProfilesInChannel(channel.Id, true)
 	cmnchan := Srv.Store.Channel().GetAllChannelMembersNotifyPropsForChannel(channel.Id, true)
 	var fchan store.StoreChannel
@@ -77,17 +77,11 @@ func SendNotifications(post *model.Post, team *model.Team, channel *model.Channe
 		mentionedUserIds, potentialOtherMentions, hereNotification, channelNotification, allNotification = GetExplicitMentions(post.Message, keywords)
 
 		// get users that have comment thread mentions enabled
-		if len(post.RootId) > 0 {
-			if result := <-Srv.Store.Post().Get(post.RootId); result.Err != nil {
-				return nil, result.Err
-			} else {
-				list := result.Data.(*model.PostList)
-
-				for _, threadPost := range list.Posts {
-					profile := profileMap[threadPost.UserId]
-					if profile != nil && (profile.NotifyProps["comments"] == "any" || (profile.NotifyProps["comments"] == "root" && threadPost.Id == list.Order[0])) {
-						mentionedUserIds[threadPost.UserId] = true
-					}
+		if len(post.RootId) > 0 && parentPostList != nil {
+			for _, threadPost := range parentPostList.Posts {
+				profile := profileMap[threadPost.UserId]
+				if profile != nil && (profile.NotifyProps["comments"] == "any" || (profile.NotifyProps["comments"] == "root" && threadPost.Id == parentPostList.Order[0])) {
+					mentionedUserIds[threadPost.UserId] = true
 				}
 			}
 		}
@@ -236,7 +230,7 @@ func SendNotifications(post *model.Post, team *model.Team, channel *model.Channe
 	sendPushNotifications := false
 	if *utils.Cfg.EmailSettings.SendPushNotifications {
 		pushServer := *utils.Cfg.EmailSettings.PushNotificationServer
-		if pushServer == model.MHPNS && (!utils.IsLicensed || !*utils.License.Features.MHPNS) {
+		if pushServer == model.MHPNS && (!utils.IsLicensed() || !*utils.License().Features.MHPNS) {
 			l4g.Warn(utils.T("api.post.send_notifications_and_forget.push_notification.mhpnsWarn"))
 			sendPushNotifications = false
 		} else {
@@ -333,8 +327,8 @@ func sendNotificationEmail(post *model.Post, user *model.User, channel *model.Ch
 	if *utils.Cfg.EmailSettings.EnableEmailBatching {
 		var sendBatched bool
 		if result := <-Srv.Store.Preference().Get(user.Id, model.PREFERENCE_CATEGORY_NOTIFICATIONS, model.PREFERENCE_NAME_EMAIL_INTERVAL); result.Err != nil {
-			// if the call fails, assume it hasn't been set and don't batch notifications for this user
-			sendBatched = false
+			// if the call fails, assume that the interval has not been explicitly set and batch the notifications
+			sendBatched = true
 		} else {
 			// if the user has chosen to receive notifications immediately, don't batch them
 			sendBatched = result.Data.(model.Preference).Value != model.PREFERENCE_EMAIL_INTERVAL_NO_BATCHING_SECONDS
@@ -359,7 +353,7 @@ func sendNotificationEmail(post *model.Post, user *model.User, channel *model.Ch
 	}
 
 	emailNotificationContentsType := model.EMAIL_NOTIFICATION_CONTENTS_FULL
-	if utils.IsLicensed && *utils.License.Features.EmailNotificationContents {
+	if utils.IsLicensed() && *utils.License().Features.EmailNotificationContents {
 		emailNotificationContentsType = *utils.Cfg.EmailSettings.EmailNotificationContentsType
 	}
 

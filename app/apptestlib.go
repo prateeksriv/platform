@@ -28,7 +28,7 @@ func SetupEnterprise() *TestHelper {
 		utils.Cfg.TeamSettings.MaxUsersPerTeam = 50
 		*utils.Cfg.RateLimitSettings.Enable = false
 		utils.DisableDebugLogForTest()
-		utils.License.Features.SetDefaults()
+		utils.License().Features.SetDefaults()
 		NewServer()
 		InitStores()
 		StartServer()
@@ -169,7 +169,7 @@ func (me *TestHelper) CreatePost(channel *model.Channel) *model.Post {
 
 	utils.DisableDebugLogForTest()
 	var err *model.AppError
-	if post, err = CreatePost(post, channel.TeamId, false); err != nil {
+	if post, err = CreatePost(post, channel, false); err != nil {
 		l4g.Error(err.Error())
 		l4g.Close()
 		time.Sleep(time.Second)

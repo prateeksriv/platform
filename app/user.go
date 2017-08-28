@@ -376,7 +376,7 @@ func GetUserByAuth(authData *string, authService string) (*model.User, *model.Ap
 }
 
 func GetUserForLogin(loginId string, onlyLdap bool) (*model.User, *model.AppError) {
-	ldapAvailable := *utils.Cfg.LdapSettings.Enable && einterfaces.GetLdapInterface() != nil && utils.IsLicensed && *utils.License.Features.LDAP
+	ldapAvailable := *utils.Cfg.LdapSettings.Enable && einterfaces.GetLdapInterface() != nil && utils.IsLicensed() && *utils.License().Features.LDAP
 
 	if result := <-Srv.Store.User().GetForLogin(
 		loginId,
@@ -758,7 +758,7 @@ func GetProfileImage(user *model.User) ([]byte, bool, *model.AppError) {
 	} else {
 		path := "users/" + user.Id + "/profile.png"
 
-		if data, err := ReadFile(path); err != nil {
+		if data, err := utils.ReadFile(path); err != nil {
 			readFailed = true
 
 			if img, err = CreateProfileImage(user.Username, user.Id); err != nil {
@@ -766,7 +766,7 @@ func GetProfileImage(user *model.User) ([]byte, bool, *model.AppError) {
 			}
 
 			if user.LastPictureUpdate == 0 {
-				if err := WriteFile(img, path); err != nil {
+				if err := utils.WriteFile(img, path); err != nil {
 					return nil, false, err
 				}
 			}
@@ -819,7 +819,7 @@ func SetProfileImage(userId string, imageData *multipart.FileHeader) *model.AppE
 
 	path := "users/" + userId + "/profile.png"
 
-	if err := WriteFile(buf.Bytes(), path); err != nil {
+	if err := utils.WriteFile(buf.Bytes(), path); err != nil {
 		return model.NewLocAppError("SetProfileImage", "api.user.upload_profile_user.upload_profile.app_error", nil, "")
 	}
 

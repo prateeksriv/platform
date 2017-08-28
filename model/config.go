@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 const (
@@ -123,11 +124,13 @@ const (
 	ANNOUNCEMENT_SETTINGS_DEFAULT_BANNER_COLOR      = "#f2a93b"
 	ANNOUNCEMENT_SETTINGS_DEFAULT_BANNER_TEXT_COLOR = "#333333"
 
-	ELASTICSEARCH_SETTINGS_DEFAULT_CONNECTION_URL      = ""
-	ELASTICSEARCH_SETTINGS_DEFAULT_USERNAME            = ""
-	ELASTICSEARCH_SETTINGS_DEFAULT_PASSWORD            = ""
-	ELASTICSEARCH_SETTINGS_DEFAULT_POST_INDEX_REPLICAS = 1
-	ELASTICSEARCH_SETTINGS_DEFAULT_POST_INDEX_SHARDS   = 1
+	ELASTICSEARCH_SETTINGS_DEFAULT_CONNECTION_URL                  = ""
+	ELASTICSEARCH_SETTINGS_DEFAULT_USERNAME                        = ""
+	ELASTICSEARCH_SETTINGS_DEFAULT_PASSWORD                        = ""
+	ELASTICSEARCH_SETTINGS_DEFAULT_POST_INDEX_REPLICAS             = 1
+	ELASTICSEARCH_SETTINGS_DEFAULT_POST_INDEX_SHARDS               = 1
+	ELASTICSEARCH_SETTINGS_DEFAULT_AGGREGATE_POSTS_AFTER_DAYS      = 365
+	ELASTICSEARCH_SETTINGS_DEFAULT_POSTS_AGGREGATOR_JOB_START_TIME = "03:00"
 )
 
 type ServiceSettings struct {
@@ -307,15 +310,12 @@ type PrivacySettings struct {
 }
 
 type SupportSettings struct {
-	TermsOfServiceLink       *string
-	PrivacyPolicyLink        *string
-	AboutLink                *string
-	HelpLink                 *string
-	ReportAProblemLink       *string
-	AdministratorsGuideLink  *string
-	TroubleshootingForumLink *string
-	CommercialSupportLink    *string
-	SupportEmail             *string
+	TermsOfServiceLink *string
+	PrivacyPolicyLink  *string
+	AboutLink          *string
+	HelpLink           *string
+	ReportAProblemLink *string
+	SupportEmail       *string
 }
 
 type AnnouncementSettings struct {
@@ -441,14 +441,16 @@ type WebrtcSettings struct {
 }
 
 type ElasticsearchSettings struct {
-	ConnectionUrl     *string
-	Username          *string
-	Password          *string
-	EnableIndexing    *bool
-	EnableSearching   *bool
-	Sniff             *bool
-	PostIndexReplicas *int
-	PostIndexShards   *int
+	ConnectionUrl               *string
+	Username                    *string
+	Password                    *string
+	EnableIndexing              *bool
+	EnableSearching             *bool
+	Sniff                       *bool
+	PostIndexReplicas           *int
+	PostIndexShards             *int
+	AggregatePostsAfterDays     *int
+	PostsAggregatorJobStartTime *string
 }
 
 type DataRetentionSettings struct {
@@ -882,33 +884,6 @@ func (o *Config) SetDefaults() {
 	if o.SupportSettings.ReportAProblemLink == nil {
 		o.SupportSettings.ReportAProblemLink = new(string)
 		*o.SupportSettings.ReportAProblemLink = SUPPORT_SETTINGS_DEFAULT_REPORT_A_PROBLEM_LINK
-	}
-
-	if !IsSafeLink(o.SupportSettings.AdministratorsGuideLink) {
-		*o.SupportSettings.AdministratorsGuideLink = ""
-	}
-
-	if o.SupportSettings.AdministratorsGuideLink == nil {
-		o.SupportSettings.AdministratorsGuideLink = new(string)
-		*o.SupportSettings.AdministratorsGuideLink = SUPPORT_SETTINGS_DEFAULT_ADMINISTRATORS_GUIDE_LINK
-	}
-
-	if !IsSafeLink(o.SupportSettings.TroubleshootingForumLink) {
-		*o.SupportSettings.TroubleshootingForumLink = ""
-	}
-
-	if o.SupportSettings.TroubleshootingForumLink == nil {
-		o.SupportSettings.TroubleshootingForumLink = new(string)
-		*o.SupportSettings.TroubleshootingForumLink = SUPPORT_SETTINGS_DEFAULT_TROUBLESHOOTING_FORUM_LINK
-	}
-
-	if !IsSafeLink(o.SupportSettings.CommercialSupportLink) {
-		*o.SupportSettings.CommercialSupportLink = ""
-	}
-
-	if o.SupportSettings.CommercialSupportLink == nil {
-		o.SupportSettings.CommercialSupportLink = new(string)
-		*o.SupportSettings.CommercialSupportLink = SUPPORT_SETTINGS_DEFAULT_COMMERCIAL_SUPPORT_LINK
 	}
 
 	if o.SupportSettings.SupportEmail == nil {
@@ -1452,6 +1427,16 @@ func (o *Config) SetDefaults() {
 		*o.ElasticsearchSettings.PostIndexShards = ELASTICSEARCH_SETTINGS_DEFAULT_POST_INDEX_SHARDS
 	}
 
+	if o.ElasticsearchSettings.AggregatePostsAfterDays == nil {
+		o.ElasticsearchSettings.AggregatePostsAfterDays = new(int)
+		*o.ElasticsearchSettings.AggregatePostsAfterDays = ELASTICSEARCH_SETTINGS_DEFAULT_AGGREGATE_POSTS_AFTER_DAYS
+	}
+
+	if o.ElasticsearchSettings.PostsAggregatorJobStartTime == nil {
+		o.ElasticsearchSettings.PostsAggregatorJobStartTime = new(string)
+		*o.ElasticsearchSettings.PostsAggregatorJobStartTime = ELASTICSEARCH_SETTINGS_DEFAULT_POSTS_AGGREGATOR_JOB_START_TIME
+	}
+
 	if o.DataRetentionSettings.Enable == nil {
 		o.DataRetentionSettings.Enable = new(bool)
 		*o.DataRetentionSettings.Enable = false
@@ -1698,6 +1683,14 @@ func (o *Config) IsValid() *AppError {
 
 	if *o.ElasticsearchSettings.EnableSearching && !*o.ElasticsearchSettings.EnableIndexing {
 		return NewLocAppError("Config.IsValid", "model.config.is_valid.elastic_search.enable_searching.app_error", nil, "")
+	}
+
+	if *o.ElasticsearchSettings.AggregatePostsAfterDays < 1 {
+		return NewAppError("Config.IsValid", "model.config.is_valid.elastic_search.aggregate_posts_after_days.app_error", nil, "", http.StatusBadRequest)
+	}
+
+	if _, err := time.Parse("03:04", *o.ElasticsearchSettings.PostsAggregatorJobStartTime); err != nil {
+		return NewAppError("Config.IsValid", "model.config.is_valid.elastic_search.posts_aggregator_job_start_time.app_error", nil, err.Error(), http.StatusBadRequest)
 	}
 
 	return nil
